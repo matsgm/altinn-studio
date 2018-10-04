@@ -20,7 +20,7 @@ COPY Model .
 COPY Resources .
 COPY Views .
 COPY config.json .
-WORKDIR /App
-COPY --from=build /App .
+WORKDIR /app
+COPY --from=build /app .
 RUN ls
 ENTRYPOINT ["dotnet", "AltinnCore.Runtime.dll"]
