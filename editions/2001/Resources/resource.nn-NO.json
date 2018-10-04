@@ -1,0 +1,117 @@
+{
+  "language": "nn-NO",
+  "resources": [
+    {
+      "id": "5801.Skattyterinfor.Label",
+      "value": "Informasjon om skattytar"
+    },
+    {
+      "id": "5801.Skattyterinfor.Help",
+      "value": "Gi opplysningar om klagar sitt namn, postadresse, postnummer og  f�dsels-/organisasjonsnummer"
+    },
+    {
+      "id": "25795.OppgavegiverNavnPreutfylt.Label",
+      "value": "Namn"
+    },
+    {
+      "id": "25796.OppgavegiverAdressePreutfylt.Label",
+      "value": "Adresse"
+    },
+    {
+      "id": "25797.OppgavegiverPostnummerPreutfylt.Label",
+      "value": "Postnummer"
+    },
+    {
+      "id": "25798.OppgavegiverPoststedPreutfylt.Label",
+      "value": "Poststad"
+    },
+    {
+      "id": "26.OppgavegiverFodselsnummer.Label",
+      "value": "F�dselsnummer"
+    },
+    {
+      "id": "17.EnhetKommunenummer.Label",
+      "value": "Kommune"
+    },
+    {
+      "id": "17.EnhetKommunenummer.PlaceHolder",
+      "value": "Kontorkommuna til selskapet"
+    },
+    {
+      "id": "5803.Kontakt.Label",
+      "value": "Kontaktinformasjon"
+    },
+    {
+      "id": "5803.Kontakt.Help",
+      "value": "Gi opp namn og adresse om skattytaren har ein  fullmektig/kontaktperson."
+    },
+    {
+      "id": "5803.Kontakt.PlaceHolder",
+      "value": "Kontaktperson,eventuelt fullmektig"
+    },
+    {
+      "id": "2.KontaktpersonNavn.Label",
+      "value": "Namn"
+    },
+    {
+      "id": "2751.KontaktpersonAdresse.Label",
+      "value": "Adresse"
+    },
+    {
+      "id": "10441.KontaktpersonPostnummer.Label",
+      "value": "Postnummer"
+    },
+    {
+      "id": "10442.KontaktpersonPoststed.Label",
+      "value": "Poststed"
+    },
+    {
+      "id": "27688.KontaktpersonEPost.Label",
+      "value": "Epostadresse"
+    },
+    {
+      "id": "3.KontaktpersonTelefonnummer.Label",
+      "value": "Telefonnummer"
+    },
+    {
+      "id": "5804.klagefrist.Label",
+      "value": "Klagefrist"
+    },
+    {
+      "id": "25455.KlageGjeldendeInntektsar.Label",
+      "value": "Klaga/oppmodninga om endring gjeld inntekts�ret:"
+    },
+    {
+      "id": "25455.KlageGjeldendeInntektsar.PlaceHolder",
+      "value": "NB! Klageskjemaet skal du bare bruke for � klage p� feil/endringar i  skatteoppgjeret du har mottatt.  Gi opp kva �r klaga/oppmodninga om endring gjeld."
+    },
+    {
+      "id": "25454.KlagemeldingSendtInnenKlagefrist.Label",
+      "value": "Klaga er sendt innan fristen"
+    },
+    {
+      "id": "25456.KlageUtloptKlagefristBegrunnelse.Label",
+      "value": "Grunngiving for at likninga skal tas opp til endring sj�lv om  klagefristen er utl�ypt."
+    },
+    {
+      "id": "25456.KlageUtloptKlagefristBegrunnelse.PlaceHolder",
+      "value": "Grunngi kvifor skattekontoret skal behandle klaga sj�lv om  klagefristen er utl�ypt.  NB! Inneheld grunngivinga sensitive opplysningar (t.d. om sjukdom) m�  du sende klaga i brev til skattekontoret."
+    },
+    {
+      "id": "5805.klage.Label",
+      "value": "Klage p� likninga"
+    },
+    {
+      "id": "5805.klage.Help",
+      "value": "Det skal g� klart frem kva du meiner er feil og ein grunngiving for  dette. Skatteoppgjeret viser dei bel�pa du sj�lv har f�rt opp i  sj�lvmeldinga, ved sidan av dei bel�pa skattekontoret har lagt til  grunn. Kontroller at\n                        bel�pa er rett (det kan vere sm� skilnader p�  grunn av �reavrundinga). Ver merksam p� at du m� betale restskatten i  tide sj�lv om du klagar p� likninga.  Velg fra menyen til venstre for elektroniske vedlegg. Merk vedlegga  med f�dselsnummer.  Klaga behandles av skattekontoret. Skattekontoret tar kontakt om det  treng meir informasjon eller dokumentasjon. Forventa  saksbehandlingstid er ca 3 m�nader."
+    },
+    {
+      "id": "5805.klage.PlaceHolder",
+      "value": "Gi opp hva klaga gjeld. Alle klagar skal grunngivast. Grunngivinga  skal inneholde bestemte p�stander og redegjere for dei forholda som  p�standane byggjer p�. Du kan leggje ved elektroniske vedlegg ved �  trykke p� arkfana\n                        Vedlegg, �vst til venstre i skjemaet. Merk vedlegga  med f�dselsnummer.  NB! Inneheld grunngivinga sensitive opplysningar (t.d. om sjukdom), m�  du sende klaga i brev til skattekontoret."
+    },
+    {
+      "id": "25457.KlageSpesifisering.Label",
+      "value": "Klage p� likninga med grunngiving"
+    }
+  ]
+}
