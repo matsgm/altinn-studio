@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference
-      Include="Microsoft.AspNetCore.App" Version="2.1.5"/>
+      Include="Microsoft.AspNetCore.App" Version="2.1.0"/>
   </ItemGroup>
 
   <ItemGroup>
