@@ -11,7 +11,7 @@
 
   <ItemGroup>
     <Reference Include="AltinnCore.ServiceLibrary">
-      <HintPath>AltinnCore.ServiceLibrary.dll</HintPath>
+      <HintPath>../app/AltinnCore.ServiceLibrary.dll</HintPath>
     </Reference>
   </ItemGroup>
 
