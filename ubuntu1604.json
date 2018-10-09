@@ -59,9 +59,7 @@
         "systemctl disable apt-daily.service",
         "systemctl disable apt-daily.timer",
         "systemctl disable apt-daily-upgrade.timer",
-        "systemctl disable apt-daily-upgrade.service",
-
-        "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
+        "systemctl disable apt-daily-upgrade.service"
       ],
       "inline_shebang": "/bin/sh -x",
       "type": "shell"
