@@ -22,11 +22,11 @@
     "tenant_id": "{{user `tenant_id`}}",
     "subscription_id": "{{user `subscription_id`}}",
 
-    "location": "North Europe",
-    "vm_size": "Standard_DS2_v2",
+    "location": "{{user `location`}}",
+    "vm_size": "{{user `vm_size`}}",
+    "resource_group_name": "{{user `resource_group`}}",
+    "storage_account": "{{user `storage_account`}}",
 
-    "managed_image_resource_group_name": "{{user `resource_group`}}",
-    "managed_image_name": "Ubuntu1604-{{isotime \"2006-01-02\"}}",
     "capture_container_name": "images",
     "capture_name_prefix": "packer",
     "os_type": "Linux",
