@@ -122,7 +122,7 @@
       "type": "shell",
       "scripts":[
           "{{template_dir}}/scripts/helpers/containercache.sh",
-          "{{template_dir}}/scripts/installers/hosted-tool-cache.sh"
+          "{{template_dir}}/scripts/installers/walinuxagent.sh"
       ],
       "environment_vars": [
           "METADATA_FILE={{user `metadata_file`}}",
