@@ -8,5 +8,5 @@
 
 source $HELPER_SCRIPTS/document.sh
 
-AddTitle "Hosted Ubuntu 1604 Image ($(lsb_release -ds))"
+AddTitle "Altinn Ubuntu 1604 Image ($(lsb_release -ds))"
 AddSubTitle "What's on this image"
