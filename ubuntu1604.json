@@ -6,7 +6,6 @@
     "subscription_id": "{{env `ARM_SUBSCRIPTION_ID`}}",
     "tenant_id": "{{env `ARM_TENANT_ID`}}",
     "resource_group": "{{env `ARM_RESOURCE_GROUP`}}",
-    "storage_account": "{{env `ARM_STORAGE_ACCOUNT`}}",
     "location": "{{env `ARM_RESOURCE_LOCATION`}}",
     "image_folder": "/imagegeneration",
     "commit_file": "/imagegeneration/commit.txt",
@@ -24,11 +23,9 @@
 
     "location": "{{user `location`}}",
     "vm_size": "{{user `vm_size`}}",
-    "resource_group_name": "{{user `resource_group`}}",
-    "storage_account": "{{user `storage_account`}}",
+    "managed_image_resource_group_name": "{{user `resource_group`}}",	
+    "managed_image_name": "Ubuntu1604-{{isotime \"2006-01-02\"}}",
 
-    "capture_container_name": "images",
-    "capture_name_prefix": "packer",
     "os_type": "Linux",
     "image_publisher": "Canonical",
     "image_offer": "UbuntuServer",
