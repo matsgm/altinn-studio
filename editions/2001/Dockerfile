@@ -2,6 +2,8 @@ FROM altinntjenestercontainerregistry.azurecr.io/altinn-runtime:124 AS stage
 
 #dotnet:2.1-sdk
 FROM microsoft/dotnet@sha256:c50b596c93b11167ef7c6174a2717a18382d28965c11984691a0479c990ada3d AS build
+WORKDIR /app
+COPY --from=stage /app/AltinnCore.ServiceLibrary.dll .
 WORKDIR /AltinnService/
 COPY --from=stage /AltinnService .
 COPY Implementation/*.cs ./
