@@ -1,4 +1,4 @@
-FROM altinntjenestercontainerregistry.azurecr.io/runtime:15 AS build
+FROM altinntjenestercontainerregistry.azurecr.io/altinn-runtime:83 AS build
 WORKDIR /AltinnService/
 COPY /AltinnService .
 COPY Implementation/*.cs ./
