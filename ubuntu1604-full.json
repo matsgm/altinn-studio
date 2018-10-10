@@ -24,7 +24,7 @@
     "location": "{{user `location`}}",
     "vm_size": "{{user `vm_size`}}",
     "managed_image_resource_group_name": "{{user `resource_group`}}",	
-    "managed_image_name": "Ubuntu1604-{{isotime \"2006-01-02\"}}",
+    "managed_image_name": "Ubuntu1604-{{isotime \"2006-01-02\"}}-full",
 
     "os_type": "Linux",
     "image_publisher": "Canonical",
