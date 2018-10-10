@@ -11,7 +11,9 @@ source $HELPER_SCRIPTS/document.sh
 # Install LTS Node.js and related build tools
 curl -sL https://git.io/n-install | bash -s -- -ny -
 ~/n/bin/n lts
-npm install -g bower grunt gulp n parcel-bundler
+#Modified original script on the following line
+#npm install -g bower grunt gulp n parcel-bundler
+npm install -g gulp n
 npm install -g --save-dev webpack webpack-cli
 npm install -g npm
 rm -rf ~/n
