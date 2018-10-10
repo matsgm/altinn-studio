@@ -7,7 +7,7 @@ namespace AltinnCoreServiceImplementation.matsgm.dotnet01_2001
     {
         public CalculationHandler()
         {
-            // some comment out code
+            // some comment out code. With more text.
         }
 
         public void Calculate(Skjema Skjema)
