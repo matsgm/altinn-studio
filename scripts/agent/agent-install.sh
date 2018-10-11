@@ -20,7 +20,6 @@ tar zxvf vsts-agent-linux-x64-2.140.2.tar.gz
 --auth pat \
 --token $AZURE_DEVOPS_TOKEN \
 --pool $AZURE_AGENT_HOST_POOL \
---agent $AZURE_AGENT \
 –acceptTeeEula
 
 ./svc.sh install
