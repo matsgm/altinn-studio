@@ -1,4 +1,14 @@
 #!/bin/bash
+################################################################################
+##  File:  agent-install.sh
+##  Team:  Altinn Tjenester 3.0 <mats.myhre@capgemini.com>
+##  Desc:  Downloads and installs VSTS Agent
+################################################################################
+
+#install agent
+
+#Disabled old walinuxagent install
+# sudo apt install walinuxagent
 
 mkdir myagent
 cd myagent
