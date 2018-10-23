@@ -25,7 +25,6 @@ WORKDIR /AltinnService/bin/
 COPY --from=build /AltinnService/publish/AltinnService* ./
 WORKDIR /AltinnService/
 COPY . .
-RUN ls
 
 #entrypoint
 ENTRYPOINT ["dotnet", "AltinnCore.Runtime.dll"]
