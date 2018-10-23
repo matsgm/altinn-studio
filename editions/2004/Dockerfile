@@ -22,7 +22,7 @@ COPY --from=stage /app .
 
 #copy service
 WORKDIR /AltinnService/bin/
-COPY --from=build /AltinnService/publish/AltinnService* .
+COPY --from=build /AltinnService/publish/AltinnService* ./
 RUN ls
 WORKDIR /AltinnService/
 RUN ls
