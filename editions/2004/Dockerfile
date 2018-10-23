@@ -23,15 +23,9 @@ COPY --from=stage /app .
 #copy service
 WORKDIR /AltinnService/bin/
 COPY --from=build /AltinnService/publish/AltinnService* ./
-RUN ls
 WORKDIR /AltinnService/
+COPY { c != 'DockerFile' } ./
 RUN ls
-COPY Metadata .
-COPY Model .
-COPY Views .
-COPY config.json .
-COPY Implementation .
-COPY Resources .
 
 #entrypoint
 ENTRYPOINT ["dotnet", "AltinnCore.Runtime.dll"]
