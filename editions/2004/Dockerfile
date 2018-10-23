@@ -23,6 +23,7 @@ COPY --from=stage /app .
 #copy service
 WORKDIR /AltinnService/
 COPY --from=build /AltinnService/publish/ .
+RUN ls
 COPY Metadata .
 COPY Model .
 COPY Views .
