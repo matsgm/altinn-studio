@@ -1,0 +1,201 @@
+{
+  "language": "nb-NO",
+  "resources": [
+    {
+      "id": "5801.Skattyterinfor.Label",
+      "value": "Informasjon om skattyter"
+    },
+    {
+      "id": "5801.Skattyterinfor.Help",
+      "value": "Gi opplysninger om klagers navn, postadresse, postnummer og  fødsels-/organisasjonsnummer"
+    },
+    {
+      "id": "25795.OppgavegiverNavnPreutfylt.Help",
+      "value": "Navn på oppgavegiver"
+    },
+    {
+      "id": "25795.OppgavegiverNavnPreutfylt.Label",
+      "value": "Navn"
+    },
+    {
+      "id": "25796.OppgavegiverAdressePreutfylt.Help",
+      "value": "Adresse til oppgavegiver"
+    },
+    {
+      "id": "25796.OppgavegiverAdressePreutfylt.Label",
+      "value": "Adresse"
+    },
+    {
+      "id": "25797.OppgavegiverPostnummerPreutfylt.Help",
+      "value": "Postnummer til oppgavegiver"
+    },
+    {
+      "id": "25797.OppgavegiverPostnummerPreutfylt.Label",
+      "value": "Postnummer"
+    },
+    {
+      "id": "25798.OppgavegiverPoststedPreutfylt.Help",
+      "value": "Poststed til oppgavegiver"
+    },
+    {
+      "id": "25798.OppgavegiverPoststedPreutfylt.Label",
+      "value": "Poststed"
+    },
+    {
+      "id": "26.OppgavegiverFodselsnummer.Help",
+      "value": "Fødselsnummer til oppgavegiveren"
+    },
+    {
+      "id": "26.OppgavegiverFodselsnummer.Label",
+      "value": "Fødselsnummer"
+    },
+    {
+      "id": "18.EnhetOrganisasjonsnummer.Help",
+      "value": "Organisasjonsnummeret til enheten"
+    },
+    {
+      "id": "18.EnhetOrganisasjonsnummer.Label",
+      "value": "Organisasjonsnummer til årsregnskapets eier"
+    },
+    {
+      "id": "17.EnhetKommunenummer.Help",
+      "value": "Kommunenummer i forretningsadressen til juridisk enhet"
+    },
+    {
+      "id": "17.EnhetKommunenummer.Label",
+      "value": "Kommune"
+    },
+    {
+      "id": "17.EnhetKommunenummer.PlaceHolder",
+      "value": "Selskapets kontorkommune"
+    },
+    {
+      "id": "5803.Kontakt.Label",
+      "value": "Kontaktinformasjon"
+    },
+    {
+      "id": "5803.Kontakt.Help",
+      "value": "Gi opp navn og adresse om skattyteren har en fullmektig/kontaktperson."
+    },
+    {
+      "id": "5803.Kontakt.PlaceHolder",
+      "value": "Kontaktperson,eventuelt fullmektig"
+    },
+    {
+      "id": "2.KontaktpersonNavn.Label",
+      "value": "Navn"
+    },
+    {
+      "id": "2751.KontaktpersonAdresse.Help",
+      "value": "Kontaktpersonens gateadresse"
+    },
+    {
+      "id": "2751.KontaktpersonAdresse.Label",
+      "value": "Adresse"
+    },
+    {
+      "id": "10441.KontaktpersonPostnummer.Help",
+      "value": "Postnummer i kontaktpersons adresse"
+    },
+    {
+      "id": "10441.KontaktpersonPostnummer.Label",
+      "value": "Postnummer"
+    },
+    {
+      "id": "10442.KontaktpersonPoststed.Help",
+      "value": "Poststed i kontaktpersons adresse"
+    },
+    {
+      "id": "10442.KontaktpersonPoststed.Label",
+      "value": "Poststed"
+    },
+    {
+      "id": "27688.KontaktpersonEPost.Help",
+      "value": "E-postadressen til kontaktperson"
+    },
+    {
+      "id": "27688.KontaktpersonEPost.Label",
+      "value": "Epostadresse"
+    },
+    {
+      "id": "3.KontaktpersonTelefonnummer.Help",
+      "value": "Kontaktpersonens telefonnummer"
+    },
+    {
+      "id": "3.KontaktpersonTelefonnummer.Label",
+      "value": "Telefonnummer"
+    },
+    {
+      "id": "5804.klagefrist.Label",
+      "value": "Klagefrist"
+    },
+    {
+      "id": "25455.KlageGjeldendeInntektsar.Help",
+      "value": "Inntektsåret klagen gjelder for."
+    },
+    {
+      "id": "25455.KlageGjeldendeInntektsar.Label",
+      "value": "Klagen/anmodningen om endring gjelder selvangivelsen for inntektsåret:"
+    },
+    {
+      "id": "25455.KlageGjeldendeInntektsar.PlaceHolder",
+      "value": "NB! Klageskjemaet skal du bare bruke for å klage på feil/endringer i  skatteoppgjøret du har mottatt.  Oppgi hvilket inntektsår klagen/anmodningen om endring gjelder"
+    },
+    {
+      "id": "25454.KlagemeldingSendtInnenKlagefrist.Help",
+      "value": "Om klage er sendt innen klagefristen."
+    },
+    {
+      "id": "25454.KlagemeldingSendtInnenKlagefrist.Label",
+      "value": "Klagen er sendt innen fristen"
+    },
+    {
+      "id": "25456.KlageUtloptKlagefristBegrunnelse.Help",
+      "value": "Begrunnelse for klage."
+    },
+    {
+      "id": "25456.KlageUtloptKlagefristBegrunnelse.Label",
+      "value": "Begrunnelse for at likningen skal tas opp til endring selv om  klagefristen er oversittet"
+    },
+    {
+      "id": "25456.KlageUtloptKlagefristBegrunnelse.PlaceHolder",
+      "value": "Gi begrunnelse for at skattekontoret skal behandle klagen selv om  klagefristen er oversittet.  NB! Inneholder begrunnelsen sensitive opplysninger (f. eks. om sykdom)  må klagen sendes i brev til skattekontoret"
+    },
+    {
+      "id": "5805.klage.Label",
+      "value": "Klage på likningen"
+    },
+    {
+      "id": "5805.klage.Help",
+      "value": "Det skal gå klart frem hva du mener er feil og begrunnelsen for det.  Skatteoppgjøret viser de beløpene du selv har ført opp i  selvangivelsen, ved siden av de beløpene skattekontoret har lagt til  grunn. Kontroller at beløpene\n                        stemmer (det kan være små differanser  pga. øreavrunding). Vær oppmerksom på at du må betale restskatten i  rett tid selv om du klager på likningen.  Hvis teksten inneholder med enn 1000 tegn må du sende inn klagen i  eget vedlegg. Du kan legge ved elektroniske vedlegg ved å trykke på  arkfanen Vedlegg, øverst til venstre i skjemaet. Merk vedleggene med\n                        fødsels/organisasjonsnummer.  Klagen behandles av skattekontoret. Skattekontoret tar kontakt dersom  det trenger mer informasjon eller dokumentasjon. Forventet  saksbehandlingstid er ca tre måneder."
+    },
+    {
+      "id": "5805.klage.PlaceHolder",
+      "value": "Angi hva klagen gjelder. Alle klager må begrunnes. Begrunnelsen må  inneholde bestemte påstander og redegjøre for de forhold påstandene  bygger på. Du kan legge ved elektroniske vedlegg ved å trykke på  arkfanen Vedlegg, øverst\n                        til venstre i skjemaet. Merk vedleggene med  fødselsnummer.  NB! Inneholder begrunnelsen sensitive opplysninger (f.eks.om sykdom),  må den sendes i eget brev til skattekontoret."
+    },
+    {
+      "id": "25457.KlageSpesifisering.Help",
+      "value": "Spesifisering av hva det klages på."
+    },
+    {
+      "id": "25457.KlageSpesifisering.Label",
+      "value": "Klage på likningen med begrunnelse"
+    },
+    {
+      "id": "12345.KlageSpesifiseringg.Help",
+      "value": "Spesifisering av noe"
+    },
+    {
+      "id": "12345.KlageSpesifiseringg.Label",
+      "value": "Noe annet"
+    },
+    {
+      "id": "23456.KlageSpesifiseringgg.Help",
+      "value": "Spesifisering av noe annet tull"
+    },
+    {
+      "id": "23456.KlageSpesifiseringgg.Label",
+      "value": "Og en tulleting til slutt"
+    }
+  ]
+}

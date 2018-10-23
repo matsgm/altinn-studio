@@ -1,0 +1,51 @@
+﻿{
+  "data": {
+    "components": {
+      "51c16ac7-21f6-4dda-8ef4-987e2eb6178d": {
+        "component": "Header",
+        "itemType": "COMPONENT",
+        "title": "Header"
+      },
+      "153e98cf-f32d-4665-bc3e-04094b220d50": {
+        "component": "Input",
+        "itemType": "COMPONENT",
+        "title": "25457.KlageSpesifisering.Label",
+        "dataModelBinding": "klage.spesifisering.klageSpesifisering.value"
+      },
+      "48a2f55a-3802-4d55-a86b-b72389459beb": {
+        "component": "Input",
+        "itemType": "COMPONENT",
+        "title": "12345.KlageSpesifiseringg.Label",
+        "dataModelBinding": "klage.spesifisering.klageSpesifiseringg.value"
+      },
+      "60d12872-cc6d-4fd8-b115-0e8133206bfd": {
+        "component": "Input",
+        "itemType": "COMPONENT",
+        "title": "23456.KlageSpesifiseringgg.Label",
+        "dataModelBinding": "klage.spesifisering.klageSpesifiseringgg.value"
+      }
+    },
+    "containers": {
+      "eb816113-e792-42d8-94a6-3358e9a7cd64": {
+        "repeating": false,
+        "dataModelGroup": null
+      },
+      "ee28032c-d821-4679-8c5b-d337b6c7f824": {
+        "repeating": true,
+        "dataModelGroup": "klage.spesifisering",
+        "index": 0
+      }
+    },
+    "order": {
+      "eb816113-e792-42d8-94a6-3358e9a7cd64": [
+        "51c16ac7-21f6-4dda-8ef4-987e2eb6178d",
+        "ee28032c-d821-4679-8c5b-d337b6c7f824"
+      ],
+      "ee28032c-d821-4679-8c5b-d337b6c7f824": [
+		"153e98cf-f32d-4665-bc3e-04094b220d50",
+        "48a2f55a-3802-4d55-a86b-b72389459beb",
+        "60d12872-cc6d-4fd8-b115-0e8133206bfd"
+	  ]
+    }
+  }
+}

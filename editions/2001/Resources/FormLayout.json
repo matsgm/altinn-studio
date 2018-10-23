@@ -3,7 +3,7 @@
     "components": {
       "6f565bf0-c93c-44b4-8962-36a680ec2d0b": {
         "component": "Input",
-        "title": "2.KontaktpersonNavn.Label",
+        "title": "2.KontaktpersonNavn.Labels",
         "dataModelBinding": "skattyterinfor.kontakt.kontaktpersonNavn.value"
       }
     },

@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 
-namespace AltinnCoreServiceImplementation.matsgm.dotnet01_2001
+namespace AltinnCoreServiceImplementation.ninaOrg.repo1_4
 {
 
     public class CalculationHandler

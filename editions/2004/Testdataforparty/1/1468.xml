@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<Skjema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" skjemanummer="1243" spesifikasjonsnummer="10702" blankettnummer="RF-1117" tittel="Klage på likningen" gruppeid="5800">
+  <klage-grp-5805 gruppeid="5805">
+    <spesifisering-grp-5836 gruppeid="5836">
+      <KlageSpesifisering-datadef-25457 orid="25457">a1</KlageSpesifisering-datadef-25457>
+      <KlageSpesifiseringg-datadef-12345 orid="12345">a2</KlageSpesifiseringg-datadef-12345>
+      <KlageSpesifiseringgg-datadef-23456 orid="23456">a3</KlageSpesifiseringgg-datadef-23456>
+    </spesifisering-grp-5836>
+    <spesifisering-grp-5836 gruppeid="5836">
+      <KlageSpesifisering-datadef-25457 orid="25457">a4</KlageSpesifisering-datadef-25457>
+      <KlageSpesifiseringg-datadef-12345 orid="12345">a5</KlageSpesifiseringg-datadef-12345>
+      <KlageSpesifiseringgg-datadef-23456 orid="23456">a6</KlageSpesifiseringgg-datadef-23456>
+    </spesifisering-grp-5836>
+	<spesifisering-grp-5836 gruppeid="5836">
+      <KlageSpesifisering-datadef-25457 orid="25457">a7</KlageSpesifisering-datadef-25457>
+      <KlageSpesifiseringg-datadef-12345 orid="12345">a8</KlageSpesifiseringg-datadef-12345>
+      <KlageSpesifiseringgg-datadef-23456 orid="23456">a9</KlageSpesifiseringgg-datadef-23456>
+    </spesifisering-grp-5836>
+  </klage-grp-5805>
+</Skjema>
