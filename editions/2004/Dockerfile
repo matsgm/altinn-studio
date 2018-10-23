@@ -21,8 +21,10 @@ WORKDIR /app
 COPY --from=stage /app .
 
 #copy service
-WORKDIR /AltinnService/
-COPY --from=build /AltinnService/publish/ .
+WORKDIR /AltinnService/bin
+COPY --from=build /AltinnService/publish/ AltinnService*
+RUN ls
+WORKDIR /AltinnService
 RUN ls
 COPY Metadata .
 COPY Model .
