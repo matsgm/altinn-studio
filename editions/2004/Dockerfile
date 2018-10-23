@@ -27,7 +27,7 @@ WORKDIR /AltinnService/
 COPY Metadata Model Views ./
 COPY Implementation Resources ./
 COPY config.json .
-COPY . ./
+COPY * ./
 
 #entrypoint
 ENTRYPOINT ["dotnet", "AltinnCore.Runtime.dll"]
