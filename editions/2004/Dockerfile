@@ -27,7 +27,6 @@ WORKDIR /AltinnService/
 COPY Metadata Model Views ./
 COPY Implementation Resources ./
 COPY config.json .
-COPY * ./
 RUN ls
 
 #entrypoint
