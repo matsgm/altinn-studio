@@ -7,7 +7,6 @@ namespace AltinnCoreServiceImplementation.ninaOrg.repo1_4
     {
         public CalculationHandler()
         {
-            // Some commented out code
         }
 
         public void Calculate(Skjema Skjema)
