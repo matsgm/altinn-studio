@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using AltinnCore.Runtime.Models;
 
 namespace AltinnCore.Runtime.Controllers
 {
@@ -259,14 +260,21 @@ namespace AltinnCore.Runtime.Controllers
             int instanceId = _execution.GetNewServiceInstanceID(org, service, edition);
 
             // Save Formdata to database
-            this._form.SaveFormModel(
+            /*this._form.SaveFormModel(
                 serviceModel,
                 instanceId,
                 serviceImplementation.GetServiceModelType(),
                 org,
                 service,
                 edition,
-                requestContext.UserContext.ReporteeId);
+                requestContext.UserContext.ReporteeId);*/
+            FormData formData = new FormData
+            {
+                ReporteeElementId = instanceId.ToString(),
+                ReporteeId = requestContext.UserContext.ReporteeId.ToString(),
+                FormDataXml = Convert.ToString(serviceModel)
+            };
+            await DocumentDBRepository<FormData>.CreateItemAsync(formData);
 
             apiResult.InstanceId = instanceId;
             apiResult.Status = ApiStatusType.Ok;
@@ -366,16 +374,23 @@ namespace AltinnCore.Runtime.Controllers
           return Ok(apiResult);
         }
 
-  
-        // Save Formdata to database
-        this._form.SaveFormModel(
-            serviceModel,
-            instanceId,
-            serviceImplementation.GetServiceModelType(),
-            org,
-            service,
-            edition,
-            requestContext.UserContext.ReporteeId);
+
+            // Save Formdata to database
+            /*this._form.SaveFormModel(
+                serviceModel,
+                instanceId,
+                serviceImplementation.GetServiceModelType(),
+                org,
+                service,
+                edition,
+                requestContext.UserContext.ReporteeId);*/
+
+            FormData formData = new FormData
+            {
+                ReporteeElementId = instanceId.ToString(),
+                ReporteeId = requestContext.UserContext.ReporteeId.ToString(),                
+            };
+            await DocumentDBRepository<FormData>.CreateItemAsync(formData);
 
         apiResult.InstanceId = instanceId;
         apiResult.Status = ApiStatusType.Ok;

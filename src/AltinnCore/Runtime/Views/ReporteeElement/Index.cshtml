@@ -1,0 +1,19 @@
+﻿@using AltinnCore.ServiceLibrary.Configuration;
+
+@{
+    ViewData["Title"] = "Services";
+    List<AltinnCore.Runtime.Models.ReporteeElement> elements = ViewBag.ReporteeElementList;
+}
+
+<h2>Utgaver for @ViewBag.Org @ViewBag.Service</h2>
+
+
+<div id="servicelist" class="list-group my-2">
+
+  <ul>
+    @foreach (AltinnCore.Runtime.Models.ReporteeElement service in elements)
+    {
+      <li><a href="/ManualTesting/?org=@ViewBag.Org&service=@ViewBag.Service&edition=@service.ServiceId">@service.Title</a></li>
+    }
+  </ul>
+</div>

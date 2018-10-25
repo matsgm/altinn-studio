@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AltinnCore.Common.Backend;
 using AltinnCore.Common.Helpers;
 using AltinnCore.Common.Services;
 using AltinnCore.Common.Services.Interfaces;
+using AltinnCore.Runtime.Models;
 using AltinnCore.ServiceLibrary;
 using AltinnCore.ServiceLibrary.Api;
 using AltinnCore.ServiceLibrary.Enums;
@@ -333,16 +335,24 @@ namespace AltinnCore.Runtime.Controllers
                 // Create a new instance Id
                 int formID = _execution.GetNewServiceInstanceID(startServiceModel.Org, startServiceModel.Service, startServiceModel.Edition);
 
-                _form.SaveFormModel(
+                /*_form.SaveFormModel(
                     serviceModel, 
                     formID, 
                     serviceImplementation.GetServiceModelType(), 
                     startServiceModel.Org, 
                     startServiceModel.Service, 
                     startServiceModel.Edition, 
-                    requestContext.UserContext.ReporteeId);
+                    requestContext.UserContext.ReporteeId);*/
 
-                  return Redirect($"/runtime/{startServiceModel.Org}/{startServiceModel.Service}/{startServiceModel.Edition}/{formID}/#Preview");
+                FormData formData = new FormData
+                {
+                    ReporteeElementId = formID.ToString(),
+                    ReporteeId = requestContext.UserContext.ReporteeId.ToString(),
+                    FormDataXml = Convert.ToString(serviceModel)
+                };
+                await DocumentDBRepository<FormData>.CreateItemAsync(formData);
+
+                return Redirect($"/runtime/{startServiceModel.Org}/{startServiceModel.Service}/{startServiceModel.Edition}/{formID}/#Preview");
             }
 
              startServiceModel.ReporteeList = _authorization.GetReporteeList(requestContext.UserContext.UserId)

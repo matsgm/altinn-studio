@@ -338,7 +338,7 @@ namespace AltinnCore.Runtime
         routes.MapRoute(
            name: "defaultRoute2",
            template: "runtime/{controller}/{action=Index}/{id?}",
-           defaults: new { controller = "ServiceCatalogue" });
+           defaults: new { controller = "ReporteeElement" });
 
         routes.MapRoute(
                   name: "defaultRoute",

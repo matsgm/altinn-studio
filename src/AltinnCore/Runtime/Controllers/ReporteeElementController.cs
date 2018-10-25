@@ -15,8 +15,24 @@ namespace AltinnCore.Runtime.Controllers
         [ActionName("Index")]
         public async Task<ActionResult> IndexAsync()
         {
-            var reporteeElements = await DocumentDBRepository<ReporteeElement>.GetItemsAsync(d => !d.IsDeleted);
-            return View(reporteeElements);
+            var reporteeElements = await DocumentDBRepository<ReporteeElement>.GetItemsAsync(d => d.ReporteeElementType == "reporting");
+            List<ReporteeElement> reporteeelementList = reporteeElements.ToList();
+            ViewBag.ReporteeElementList = reporteeelementList;
+            return View(reporteeelementList);
+        }
+
+
+        [HttpPost]
+        [ActionName("Save")]
+        public async Task<ReporteeElement> SaveAsync([FromBody] ReporteeElement reporteeElement)
+        {
+            if (ModelState.IsValid)
+            {
+                await DocumentDBRepository<ReporteeElement>.CreateItemAsync(reporteeElement);
+                return reporteeElement;
+            }
+
+            return null;
         }
     }
 }

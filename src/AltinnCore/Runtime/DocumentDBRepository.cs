@@ -81,5 +81,21 @@ namespace AltinnCore.Runtime
 
             return results;
         }
+
+        public static async Task<Document> CreateItemAsync(T item)
+        {
+            Initialize();
+            return await client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId), item);
+        }
+
+        public static async Task<Document> UpdateItemAsync(string id, T item)
+        {
+            return await client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id), item);
+        }
+
+        public static async Task DeleteItemAsync(string id)
+        {
+            await client.DeleteDocumentAsync(UriFactory.CreateDocumentUri(DatabaseId, CollectionId, id));
+        }
     }
 }
