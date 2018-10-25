@@ -10,6 +10,7 @@ WORKDIR /app
 
 #copy altinn-runtime app
 COPY --from=build /app .
+RUN mv Testdata ..
 
 #copy service
 WORKDIR /AltinnService/bin/
