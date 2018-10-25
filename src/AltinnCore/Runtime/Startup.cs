@@ -25,6 +25,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Net.Http.Headers;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using AltinnCore.Runtime.Models;
 
 namespace AltinnCore.Runtime
 {
@@ -35,7 +36,8 @@ namespace AltinnCore.Runtime
 
     public Startup(IConfiguration configuration)
     {
-      Configuration = configuration;
+        Configuration = configuration;
+        DocumentDBRepository<ReporteeElement>.Initialize();
     }
 
     // This method gets called by the runtime. Use this method to add services to the container.
