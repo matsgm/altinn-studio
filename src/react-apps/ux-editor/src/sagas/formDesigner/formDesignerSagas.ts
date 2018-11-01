@@ -11,7 +11,7 @@ const uuid = require('uuid/v4');
 const selectFormDesigner = (state: IAppState): IFormDesignerState => state.formDesigner;
 const selectFormFiller = (state: IAppState): IFormFillerState => state.formFiller;
 
-function* addActiveFormContainerSaga({ containerId }: FormDesignerActions.IAddActiveFormContainerAction): SagaIterator {
+export function* addActiveFormContainerSaga({ containerId }: FormDesignerActions.IAddActiveFormContainerAction): SagaIterator {
   try {
     const formDesignerState: IFormDesignerState = yield select(selectFormDesigner);
     yield call(FormDesignerActionDispatchers.addActiveFormContainerFulfilled, containerId === formDesignerState.layout.activeContainer ? '' : containerId)
