@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
+import 'jest';
 
 import { CheckboxContainerComponent } from '../../../src/components/base/CheckboxesContainerComponent';
 
