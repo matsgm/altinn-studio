@@ -41,13 +41,13 @@ describe('>>> manageServiceConfigurationSaga', () => {
       expect(JSON.stringify(iterator.next(action).value)).toEqual(JSON.stringify(select(selectServiceConfiguration)));
     });
 
-    it('should loop through selected state and post it to the api', () => {
+    it('+++ should loop through selected state and post it to the api', () => {
       expect(JSON.stringify(iterator.next(mockServiceConfigurationState).value)).toEqual(JSON.stringify(call(post, url, {
         data: {}
       })));
     });
 
-    it('should fire of the event of successfull save', () => {
+    it('+++ should fire of the event of successfull save', () => {
       expect(JSON.stringify(iterator.next().value)).toEqual(JSON.stringify(call(manageServiceConfigurationActionDispatcher.saveJsonFileFulfilled, 'data')));
     });
   });
