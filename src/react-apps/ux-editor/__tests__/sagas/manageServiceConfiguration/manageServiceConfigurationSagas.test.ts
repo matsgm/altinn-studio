@@ -7,7 +7,7 @@ import { get, post } from '../../../src/utils/networking';
 
 import 'jest';
 
-describe('>>> manageServiceConfigurationSaga', () => {
+describe('>>> manageServiceConfigurationSagas', () => {
   const url = 'test-url';
 
   describe('>>> fetchJsonFileSaga', () => {

@@ -18,7 +18,7 @@ const selectFormFiller = (state: IAppState): IFormFillerState => state.formFille
 const selectApi = (state: IAppState): IApiState => state.serviceConfigurations.APIs;
 const selectAppData = (state: IAppState): IAppDataState => state.appData;
 
-function* addApiConnectionSaga({ newConnection }: ApiActions.IAddApiConnection): SagaIterator {
+export function* addApiConnectionSaga({ newConnection }: ApiActions.IAddApiConnection): SagaIterator {
   try {
     yield call(ApiActionDispatchers.addApiConnectionFulfilled, newConnection);
   } catch (err) {
@@ -33,7 +33,7 @@ export function* watchAddApiConnectionSaga(): SagaIterator {
   );
 }
 
-function* delApiConnectionSaga({ connectionId }: ApiActions.IDelApiConnection): SagaIterator {
+export function* delApiConnectionSaga({ connectionId }: ApiActions.IDelApiConnection): SagaIterator {
   try {
     // get state
     const apiState: IApiState = yield select(selectApi);
@@ -63,7 +63,7 @@ export function* watchDelApiConnectionSaga(): SagaIterator {
   );
 }
 
-function* checkIfApisShouldFetchSaga({ lastUpdatedDataBinding, lastUpdatedDataValue, lastUpdatedComponentId, repeating, dataModelGroup, index }: ApiActions.ICheckIfApiShouldFetchAction): SagaIterator {
+export function* checkIfApisShouldFetchSaga({ lastUpdatedDataBinding, lastUpdatedDataValue, lastUpdatedComponentId, repeating, dataModelGroup, index }: ApiActions.ICheckIfApiShouldFetchAction): SagaIterator {
   try {
     // get state
     const formFillerState: IFormFillerState = yield select(selectFormFiller);
@@ -99,7 +99,7 @@ export function* watchCheckIfApisShouldFetchSaga(): SagaIterator {
   );
 }
 
-function* fetchApiListResponseSaga(): SagaIterator {
+export function* fetchApiListResponseSaga(): SagaIterator {
   const apiState: IApiState = yield select(selectApi);
   const formDesignerState: IFormDesignerState = yield select(selectFormDesigner);
 
@@ -125,7 +125,7 @@ export function* watchFetchApiListResponseSaga(): SagaIterator {
   );
 }
 
-function* apiFetchList(connectionDef: any, externalApisById: any, components: any) {
+export function* apiFetchList(connectionDef: any, externalApisById: any, components: any) {
   let dataBindingName;
   for (const dataMapping in connectionDef.apiResponseMapping) {
     if (!dataMapping || dataMapping === 'labelKey' || dataMapping === 'valueKey') {
@@ -191,7 +191,7 @@ function* apiFetchList(connectionDef: any, externalApisById: any, components: an
   }
 }
 
-function* apiCheckValue(connectionDef: any, lastUpdatedDataBinding: IDataModelFieldElement, lastUpdatedDataValue: any,
+export function* apiCheckValue(connectionDef: any, lastUpdatedDataBinding: IDataModelFieldElement, lastUpdatedDataValue: any,
   formData: any, externalApisById: any, components: IFormDesignerComponent, model: any, repeating: boolean, dataModelGroup?: string, index?: number) {
   for (const param in connectionDef.clientParams) {
     if (!param) {
@@ -271,17 +271,17 @@ function* apiCheckValue(connectionDef: any, lastUpdatedDataBinding: IDataModelFi
   }
 }
 
-function getCodeListUri(codeListId: string) {
+export function getCodeListUri(codeListId: string) {
   const altinnWindow: IAltinnWindow = window as IAltinnWindow;
-  const { org, service, edition } = altinnWindow;
-  const serviceEditionPath = `${org}/${service}/${edition}`;
+  const { org, service } = altinnWindow;
+  const servicePath = `${org}/${service}`;
   const codeListConfig = appConfig.serviceConfiguration.getCodeLists(window);
 
   if (altinnWindow.location.pathname.split('/')[1].toLowerCase() === 'runtime') {
     return `${codeListConfig.codeListUrlRuntime.replace(
-      codeListConfig.servicePathPlaceholder, serviceEditionPath)}${codeListId}`;
+      codeListConfig.servicePathPlaceholder, servicePath)}${codeListId}`;
   }
 
   return `${codeListConfig.codeListUrlPreview.replace(
-    codeListConfig.servicePathPlaceholder, serviceEditionPath)}${codeListId}`;
+    codeListConfig.servicePathPlaceholder, servicePath)}${codeListId}`;
 }
