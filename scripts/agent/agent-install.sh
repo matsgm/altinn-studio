@@ -26,3 +26,5 @@ tar zxvf vsts-agent-linux-x64-2.140.2.tar.gz
 ./svc.sh start
 
 usermod -a -G docker $USER
+
+restart
