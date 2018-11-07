@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
       - name: altinn-designer
-        image: altinntjenestercontainerregistry.azurecr.io/altinn-core:564
+        image: altinntjenestercontainerregistry.azurecr.io/altinn-core:793
         ports:
         - containerPort: 5000
         volumeMounts:
@@ -45,9 +45,9 @@ spec:
           mountPath: "/AltinnCore/Repos"
         env:
         - name: GiteaEndpoint
-          value: altinn.studio
+          value: altinn-repositories
         - name: GiteaApiEndpoint
-          value: https://altinn.studio/api/v1
+          value: http://altinn-repositories:3000/api/v1
         - name: GiteaLoginEndpoint
           value: https://altinn.studio/user/login
         - name: ASPNETCORE_ENVIRONMENT
