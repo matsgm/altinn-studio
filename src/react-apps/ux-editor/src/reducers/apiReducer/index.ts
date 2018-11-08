@@ -7,12 +7,13 @@ import * as ManageJsonFileActions from '../../actions/manageServiceConfiguration
 import * as ManageJsonFileActionTypes from '../../actions/manageServiceConfigurationActions/manageServiceConfigurationActionTypes';
 
 export interface IApiConnection {
-  [key: string]: any;
-  externalApiId?: any;
-  codeListId?: any;
-  clientParams: any;
-  metaParams: any;
-  apiResponseMapping: any;
+  [key: string]: {
+    externalApiId?: any;
+    codeListId?: any;
+    clientParams: any;
+    metaParams: any;
+    apiResponseMapping: any;
+  }
 }
 
 export interface IApiState {

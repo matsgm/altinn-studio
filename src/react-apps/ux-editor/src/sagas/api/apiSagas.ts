@@ -63,7 +63,7 @@ export function* watchDelApiConnectionSaga(): SagaIterator {
   );
 }
 
-export function* checkIfApisShouldFetchSaga({ lastUpdatedDataBinding, lastUpdatedDataValue, lastUpdatedComponentId, repeating, dataModelGroup, index }: ApiActions.ICheckIfApiShouldFetchAction): SagaIterator {
+export function* checkIfApisShouldFetchSaga({ lastUpdatedDataBinding, lastUpdatedDataValue, repeating, dataModelGroup, index }: ApiActions.ICheckIfApiShouldFetchAction): SagaIterator {
   try {
     // get state
     const formFillerState: IFormFillerState = yield select(selectFormFiller);
@@ -75,20 +75,34 @@ export function* checkIfApisShouldFetchSaga({ lastUpdatedDataBinding, lastUpdate
         continue;
       }
 
-      const connectionDef = apiState.connections[connection];
-      const apiType = connectionDef.externalApiId ?
-        apiState.externalApisById[connectionDef.externalApiId].type : 'codelist';
-      if (apiType !== 'list' || apiType !== 'codelist' && formFillerState.validationErrors
-        && Object.keys(formFillerState.validationErrors).length === 0) {
-        // Do check for APIs returning single values
-        yield call(apiCheckValue, connectionDef, lastUpdatedDataBinding, lastUpdatedDataValue,
-          formFillerState.formData, apiState.externalApisById,
-          formDesignerState.layout.components, appDataState.dataModel.model, repeating, dataModelGroup, index);
-      }
+      yield call(
+        checkIfApisShouldFetch,
+        apiState,
+        connection,
+        formFillerState,
+        lastUpdatedDataBinding,
+        lastUpdatedDataValue,
+        formDesignerState,
+        appDataState,
+        repeating,
+        dataModelGroup,
+        index,
+      );
     }
   } catch (err) {
     ErrorActionDispatchers.addError('Ånei! Noe gikk galt, vennligst prøv igjen seinere.');
     console.error(err);
+  }
+}
+
+export function* checkIfApisShouldFetch(apiState: IApiState, connection: string, formFillerState: IFormFillerState, lastUpdatedDataBinding: IDataModelFieldElement, lastUpdatedDataValue: string, formDesignerState: IFormDesignerState, appDataState: IAppDataState, repeating: boolean, dataModelGroup: string, index: number) {
+  const connectionDef = apiState.connections[connection];
+  const apiType = connectionDef.externalApiId ?
+    apiState.externalApisById[connectionDef.externalApiId].type : 'codelist';
+  if (apiType !== 'list' || apiType !== 'codelist' && formFillerState.validationErrors
+    && Object.keys(formFillerState.validationErrors).length === 0) {
+    // Do check for APIs returning single values
+    yield call(apiCheckValue, connectionDef, lastUpdatedDataBinding, lastUpdatedDataValue, formFillerState.formData, apiState.externalApisById, formDesignerState.layout.components, appDataState.dataModel.model, repeating, dataModelGroup, index);
   }
 }
 
