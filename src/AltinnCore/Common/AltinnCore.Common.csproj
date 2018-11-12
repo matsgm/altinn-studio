@@ -11,6 +11,8 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <TreatSpecificWarningsAsErrors />
     <CodeAnalysisRuleSet>AltinnCore.Common.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
