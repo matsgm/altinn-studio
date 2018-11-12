@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -6,15 +6,26 @@
     <AssemblyName>AltinnCore.Common</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CodeAnalysisRuleSet>AltinnCore.Common.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CodeAnalysisRuleSet>AltinnCore.Common.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis" Version="2.8.2" />
     <PackageReference Include="LibGit2Sharp" Version="0.26.0-preview-0027" />
+    <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.1.0.47" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\RepositoryClient\AltinnCore.RepositoryClient.csproj" />
     <ProjectReference Include="..\ServiceLibrary\AltinnCore.ServiceLibrary.csproj" />
-  </ItemGroup>
-
+  </ItemGroup> 
 </Project>
