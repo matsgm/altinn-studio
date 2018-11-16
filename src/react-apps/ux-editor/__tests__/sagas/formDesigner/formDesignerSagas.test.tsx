@@ -1,10 +1,11 @@
-import { cloneableGenerator } from 'redux-saga/utils';
 import { SagaIterator } from 'redux-saga';
 import { call, select } from 'redux-saga/effects';
-import '../../../src/types/global';
+import { cloneableGenerator } from 'redux-saga/utils';
+import FormDesignerActionDispatchers from '../../../src/actions/formDesignerActions/formDesignerActionDispatcher';
 import { IFormDesignerState } from '../../../src/reducers/formDesignerReducer';
 import { addActiveFormContainerSaga } from '../../../src/sagas/formDesigner/formDesignerSagas';
-import FormDesignerActionDispatchers from '../../../src/actions/formDesignerActions/formDesignerActionDispatcher';
+
+import '../../../src/types/global';
 
 describe('>>> sagas/formDesigner/formDesignerSagas.tsx', () => {
 
@@ -12,7 +13,7 @@ describe('>>> sagas/formDesigner/formDesignerSagas.tsx', () => {
   const component = {
     title: 'title',
     component: '123abc',
-  }
+  };
   const store = {
     getState: jest.fn(() => ({
       formDesignerState: {
@@ -26,11 +27,11 @@ describe('>>> sagas/formDesigner/formDesignerSagas.tsx', () => {
           saving: false,
           unSavedChanges: false,
           activeContainer: '',
-        }
-      }
+        },
+      },
     })),
-    dispatch: jest.fn()
-  }
+    dispatch: jest.fn(),
+  };
 
   describe('>>>addActiveFormContainerSaga', () => {
     const selectFormDesigner = (state: IAppState): IFormDesignerState => state.formDesigner;
@@ -60,9 +61,7 @@ describe('>>> sagas/formDesigner/formDesignerSagas.tsx', () => {
     it('should select ', () => {
       expect(JSON.stringify(next.value)).toEqual(JSON.stringify((select(selectActiveContainer))));
       expect(JSON.stringify(next.value)).toEqual(JSON.stringify((select(selectFormDesigner))));
-
-
     });
-
+    next = null;
   });
 });

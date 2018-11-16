@@ -13,19 +13,20 @@ describe('>>> components/base/RadioButtonsContainerComponent.tsx --- Snapshot', 
   let mockDesignMode: boolean;
 
   beforeEach(() => {
-    mockId = "mock-id";
+    mockId = 'mock-id';
     mockComponent = {
       id: mockId,
-      title: "test-radiobuttonscontainer",
-      component: "Checkboxes",
+      title: 'test-radiobuttonscontainer',
+      component: 'Checkboxes',
       options: [{
         label: 'test-label-1',
-        value: 'test-1'
+        value: 'test-1',
       }, {
         label: 'test-label-1',
-        value: 'test-1'
-      }]
+        value: 'test-1',
+      }],
     };
+    mockFormData = null;
     mockHandleDataChange = (data: any) => null;
     mockGetTextResource = (resourceKey: string) => 'test';
     mockIsValid = true;
@@ -42,7 +43,7 @@ describe('>>> components/base/RadioButtonsContainerComponent.tsx --- Snapshot', 
         getTextResource={mockGetTextResource}
         isValid={mockIsValid}
         designMode={mockDesignMode}
-      />
+      />,
     );
     expect(rendered).toMatchSnapshot();
   });

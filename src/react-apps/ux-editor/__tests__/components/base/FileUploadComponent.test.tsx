@@ -11,12 +11,13 @@ describe('>>> components/base/FileUploadComponent.tsx --- Snapshot', () => {
   let mockIsValid: boolean;
 
   beforeEach(() => {
-    mockId = "mock-id";
+    mockId = 'mock-id';
     mockComponent = {
       id: mockId,
-      title: "test-fileuploader",
-      component: "Checkboxes",
+      title: 'test-fileuploader',
+      component: 'Checkboxes',
     };
+    mockFormData = null;
     mockHandleDataChange = (data: any) => null;
     mockIsValid = true;
   });
@@ -29,7 +30,7 @@ describe('>>> components/base/FileUploadComponent.tsx --- Snapshot', () => {
         formData={mockFormData}
         handleDataChange={mockHandleDataChange}
         isValid={mockIsValid}
-      />
+      />,
     );
     expect(rendered).toMatchSnapshot();
   });

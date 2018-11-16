@@ -1,24 +1,25 @@
 import { SagaIterator } from 'redux-saga';
 import { call, select } from 'redux-saga/effects';
 import { cloneableGenerator } from 'redux-saga/utils';
-import {
-  addApiConnectionSaga,
-  delApiConnectionSaga,
-  checkIfApisShouldFetchSaga,
-  checkIfApisShouldFetch,
-  apiCheckValue,
-} from '../../../src/sagas/api/apiSagas';
-import ApiActionDispatchers from '../../../src/actions/apiActions/apiActionDispatcher';
-import * as ApiActionTypes from '../../../src/actions/apiActions/actions/index';
 import { ICheckIfApiShouldFetchAction } from '../../../src/actions/apiActions/actions/checkApiParams';
+import * as ApiActionTypes from '../../../src/actions/apiActions/actions/index';
+import ApiActionDispatchers from '../../../src/actions/apiActions/apiActionDispatcher';
+import apiActionDispatcher from '../../../src/actions/apiActions/apiActionDispatcher';
 import { IApiState } from '../../../src/reducers/apiReducer';
+import { IAppDataState } from '../../../src/reducers/appDataReducer';
 import { IFormDesignerState } from '../../../src/reducers/formDesignerReducer';
 import { IFormFillerState } from '../../../src/reducers/formFillerReducer';
-import { IAppDataState } from '../../../src/reducers/appDataReducer';
-import apiActionDispatcher from '../../../src/actions/apiActions/apiActionDispatcher';
+import {
+  addApiConnectionSaga,
+  apiCheckValue,
+  checkIfApisShouldFetch,
+  checkIfApisShouldFetchSaga,
+  delApiConnectionSaga,
+} from '../../../src/sagas/api/apiSagas';
 import { TestHelper } from '../../TestHelper';
-import '../../../src/types/global';
+
 import 'jest';
+import '../../../src/types/global';
 
 describe('>>> apiSagas', () => {
   describe('>>> appApiConnectionSaga', () => {
@@ -29,7 +30,15 @@ describe('>>> apiSagas', () => {
     const iterator: SagaIterator = cloneableGenerator(addApiConnectionSaga)(action);
 
     it('+++ should trigger add api connection fulfilled action', () => {
-      expect(iterator.next(action).value).toEqual(call(ApiActionDispatchers.addApiConnectionFulfilled, action.newConnection) as any);
+      expect(
+        iterator
+          .next(action).value)
+        .toEqual(
+          call(
+            ApiActionDispatchers.addApiConnectionFulfilled,
+            action.newConnection,
+          )
+        );
     });
   });
 
@@ -42,23 +51,41 @@ describe('>>> apiSagas', () => {
         [mockConnectionId]: {
           test: 'test',
         },
-        "should-be-here-after-delete": {
+        'should-be-here-after-delete': {
           test: 'test',
         }
       }
     };
     const mockNewConnectionsArray = {
-      "should-be-here-after-delete": {
+      'should-be-here-after-delete': {
         test: 'test',
       }
     };
 
     it('+++ should get the state', () => {
-      expect(JSON.stringify(iterator.next(action).value)).toEqual(JSON.stringify(select(function selectApi(state: IAppState) { return state.serviceConfigurations.APIs }) as any));
+      expect(
+        JSON.stringify(
+          iterator.next(action).value))
+        .toEqual(
+          JSON.stringify(
+            select(
+              function selectApi(state: IAppState) {
+                return state.serviceConfigurations.APIs;
+              }
+            )
+          )
+        );
     });
 
     it('+++ should remove connection id provided', () => {
-      expect(iterator.next(mockConnectionsArray).value).toEqual(call(ApiActionDispatchers.delApiConnectionFulfilled, mockNewConnectionsArray) as any);
+      expect(
+        iterator.next(mockConnectionsArray).value)
+        .toEqual(
+          call(
+            ApiActionDispatchers.delApiConnectionFulfilled,
+            mockNewConnectionsArray,
+          )
+        );
     });
   });
 
@@ -86,10 +113,11 @@ describe('>>> apiSagas', () => {
       mockUpdatedComponent = mockFormDesignerState.layout.components[
         Object.keys(mockFormDesignerState.layout.components)
           .find(
-            id => mockFormDesignerState.layout.components[id].dataModelBinding !== null
+            (id) => mockFormDesignerState.layout.components[id].dataModelBinding !== null,
           )
       ];
-      mockUpdatedDataModelField = mockAppDataState.dataModel.model.find(field => field.ID === mockUpdatedComponent.dataModelBinding);
+      mockUpdatedDataModelField = mockAppDataState.dataModel.model.find(
+        (field) => field.ID === mockUpdatedComponent.dataModelBinding);
       mockUpdatedValue = 'test';
       mockRepeating = false;
 
@@ -103,10 +131,49 @@ describe('>>> apiSagas', () => {
 
     it('+++ should fetch state and check if api should fetch', () => {
       iterator = cloneableGenerator(checkIfApisShouldFetchSaga)(action);
-      expect(JSON.stringify(iterator.next(action).value)).toEqual(JSON.stringify(select(function selectFormFiller(state: IAppState) { return state.formFiller })));
-      expect(JSON.stringify(iterator.next(mockFormFillerState).value)).toEqual(JSON.stringify(select(function selectApi(state: IAppState) { return state.serviceConfigurations.APIs })));
-      expect(JSON.stringify(iterator.next(mockApiState).value)).toEqual(JSON.stringify(select(function selectAppData(state: IAppState) { return state.appData })));
-      expect(JSON.stringify(iterator.next(mockAppDataState).value)).toEqual(JSON.stringify(select(function selectFormDesigner(state: IAppState) { return state.formDesigner })));
+      expect(
+        JSON.stringify(
+          iterator.next(action).value))
+        .toEqual(JSON.stringify(
+          select(
+            function selectFormFiller(state: IAppState) {
+              return state.formFiller;
+            },
+          ),
+        ));
+      expect(
+        JSON.stringify(
+          iterator.next(mockFormFillerState).value))
+        .toEqual(
+          JSON.stringify(
+            select(
+              function selectApi(state: IAppState) {
+                return state.serviceConfigurations.APIs;
+              },
+            ),
+          ));
+      expect(
+        JSON.stringify(
+          iterator.next(mockApiState).value))
+        .toEqual(
+          JSON.stringify(
+            select(
+              function selectAppData(state: IAppState) {
+                return state.appData;
+              },
+            ),
+          ));
+      expect(
+        JSON.stringify(
+          iterator.next(mockAppDataState).value))
+        .toEqual(
+          JSON.stringify(
+            select(
+              function selectFormDesigner(state: IAppState) {
+                return state.formDesigner;
+              },
+            ),
+          ));
       expect(iterator.next(mockFormDesignerState).value).toEqual(call(
         checkIfApisShouldFetch,
         mockApiState,
@@ -118,8 +185,8 @@ describe('>>> apiSagas', () => {
         mockAppDataState,
         mockRepeating,
         action.dataModelGroup,
-        action.index
-      ) as any);
+        action.index,
+      ));
       expect(iterator.next().done).toBeTruthy();
     });
   });
@@ -155,7 +222,7 @@ describe('>>> apiSagas', () => {
 
     it('+++ should do call apiCheckValue', () => {
       iterator = cloneableGenerator(
-        checkIfApisShouldFetch
+        checkIfApisShouldFetch,
       )(
         mockApiState,
         mockConnection,
@@ -166,7 +233,7 @@ describe('>>> apiSagas', () => {
         mockAppDataState,
         mockRepeating,
         mockDataModelGroup,
-        mockIndex
+        mockIndex,
       );
       expect(iterator.next().value).toEqual(call(
         apiCheckValue,

@@ -11,12 +11,13 @@ describe('>>> components/base/TextAreaComponent.tsx --- Snapshot', () => {
   let mockIsValid: boolean;
 
   beforeEach(() => {
-    mockId = "mock-id";
+    mockId = 'mock-id';
     mockComponent = {
       id: mockId,
-      title: "test-textarea",
-      component: "Checkboxes",
+      title: 'test-textarea',
+      component: 'Checkboxes',
     };
+    mockFormData = null;
     mockHandleDataChange = (data: any) => null;
     mockIsValid = true;
   });
@@ -29,7 +30,7 @@ describe('>>> components/base/TextAreaComponent.tsx --- Snapshot', () => {
         formData={mockFormData}
         handleDataChange={mockHandleDataChange}
         isValid={mockIsValid}
-      />
+      />,
     );
     expect(rendered).toMatchSnapshot();
   });

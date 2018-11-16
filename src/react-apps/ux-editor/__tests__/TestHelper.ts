@@ -1,6 +1,6 @@
+import 'jest';
 import { mockState } from '../__mocks__/mockState';
 import '../src/types/global';
-import 'jest';
 
 // Since the file is located in the __tests__ folder, it has to have a test associated to it.
 it('should pass test', () => {
@@ -8,7 +8,7 @@ it('should pass test', () => {
 })
 
 export class TestHelper {
-  state: IAppState;
+  private state: IAppState;
 
   constructor() {
     this.state = mockState;

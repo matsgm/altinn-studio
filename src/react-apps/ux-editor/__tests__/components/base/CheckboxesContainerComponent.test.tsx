@@ -1,8 +1,9 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
-import 'jest';
 
 import { CheckboxContainerComponent } from '../../../src/components/base/CheckboxesContainerComponent';
+
+import 'jest';
 
 describe('>>> components/base/CheckboxesContainerComponent.tsx --- Snapshot', () => {
   let mockId: string;
@@ -14,19 +15,20 @@ describe('>>> components/base/CheckboxesContainerComponent.tsx --- Snapshot', ()
   let mockDesignMode: boolean;
 
   beforeEach(() => {
-    mockId = "mock-id";
+    mockId = 'mock-id';
     mockComponent = {
       id: mockId,
-      title: "test-checkboxescontainer",
-      component: "Checkboxes",
+      title: 'test-checkboxescontainer',
+      component: 'Checkboxes',
       options: [{
         label: 'test-label-1',
-        value: 'test-1'
+        value: 'test-1',
       }, {
         label: 'test-label-1',
-        value: 'test-1'
-      }]
+        value: 'test-1',
+      }],
     };
+    mockFormData = null;
     mockHandleDataChange = (data: any) => null;
     mockGetTextResource = (resourceKey: string) => 'test';
     mockIsValid = true;
