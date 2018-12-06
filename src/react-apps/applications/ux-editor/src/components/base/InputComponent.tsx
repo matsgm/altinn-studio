@@ -34,18 +34,47 @@ export class InputComponent
     this.props.handleDataChange(this.state.value);
   }
 
+  public renderDateInput() {
+  }
+
   public render() {
+    
     return (
-      <input
-        id={this.props.id}
-        type={this.props.component.type}
-        onBlur={this.onDataChangeSubmit}
-        onChange={this.onDataChanged}
-        disabled={this.props.component.disabled}
-        required={this.props.component.required}
-        className={this.props.isValid ? 'form-control' : 'form-control validation-error'}
-        value={this.state.value}
-      />
+      <div className='input-group'>
+        <input
+          id={this.props.id}
+          type={this.getInputType()}
+          onBlur={this.onDataChangeSubmit}
+          onChange={this.onDataChanged}
+          disabled={this.props.component.disabled}
+          required={this.props.component.required}
+          className={this.getClassNames()}
+          value={this.state.value}
+        />
+        <div className='input-group-prepend a-icon-right'>
+          <i className='ai ai-date' aria-hidden='true'/>
+        </div>
+      </div>
     );
+  }
+
+  private getInputType = (): string => {
+    if (this.props.component.type === 'date') {
+      return 'text';
+    }
+
+    return this.props.component.type;
+  }
+
+  private getClassNames = (): string => {
+    let classNames = 'form-control';
+    if (!this.props.isValid) {
+      classNames += ' validation-error';
+    }
+    if (this.props.component.type === 'date') {
+      classNames += ' a-hasButton date js-period';
+    }
+
+    return classNames;
   }
 }

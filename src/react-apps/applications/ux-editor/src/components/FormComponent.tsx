@@ -141,11 +141,12 @@ class FormComponent extends React.Component<
    * It is either called from FormFiller or FormDesigner.
    */
   public render(): JSX.Element {
+    
     if (!this.props.designMode) {
       return (
         <div className='row mt-2'>
           <div className='col'>
-            <div className='a-form-group'>
+            <div className={this.props.component.type === 'date' ? 'a-form-group a-form-gruop-datepicker' : 'a-form-group'}>
               {this.renderLabel()}
               {this.renderDescription()}
               {this.renderComponent()}
