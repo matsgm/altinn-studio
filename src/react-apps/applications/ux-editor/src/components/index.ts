@@ -37,6 +37,9 @@ const components: IComponent[] = [
   {
     name: 'Checkboxes',
     Tag: CheckboxContainerComponent,
+    customProperties: {
+      options: [],
+    },
   },
   {
     name: 'RadioButtons',
