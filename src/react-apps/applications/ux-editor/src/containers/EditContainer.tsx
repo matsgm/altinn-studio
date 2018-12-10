@@ -165,6 +165,17 @@ class Edit extends React.Component<IEditContainerProps, IEditContainerState> {
     this.state.component.title = e.value;
   }
 
+  public handleDataModelChange = (selectedDataModelElement: any): void => {
+    this.setState((state) => {
+      const updatedComponent = state.component;
+      updatedComponent.dataModelBinding = selectedDataModelElement.value;
+      return {
+        ...state,
+        component: updatedComponent,
+      };
+    });
+  }
+
   public searchForText = (e: any): void => {
     this.state.component.title = e.target.value;
   }
