@@ -70,3 +70,22 @@ export function getCollapsableMenuTitleByType(menu: CollapsableMenus, language: 
     }
   }
 }
+
+export function truncate (s: string, size: number) {
+  if (s.length > size) {
+    return (s.substring(0, size) + '...');
+  } else {
+    return s;
+  }
+}
+
+export function getTextResourcesForList(textResources: ITextResource[]) {
+  const textRecourcesForList: any = [];
+  textResources.map((resource, index) => {
+    const option = truncate(resource.value, 80);
+
+    textRecourcesForList.push({ value: resource.id, label: option.concat('\n(', resource.id, ')') });
+  });
+
+  return textRecourcesForList;
+}
