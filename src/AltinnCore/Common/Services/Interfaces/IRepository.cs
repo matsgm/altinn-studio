@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 
 using AltinnCore.Common.Models;
-using AltinnCore.ServiceLibrary;
 using AltinnCore.ServiceLibrary.Configuration;
+using AltinnCore.ServiceLibrary.Models;
+using AltinnCore.ServiceLibrary.Models.Workflow;
 using AltinnCore.ServiceLibrary.ServiceMetadata;
 
 namespace AltinnCore.Common.Services.Interfaces
@@ -52,6 +53,15 @@ namespace AltinnCore.Common.Services.Interfaces
         /// <param name="name">The name of configuration file</param>
         /// <returns>The fileContent</returns>
         string GetConfiguration(string org, string service, string name);
+
+        /// <summary>
+        /// Get content of file path relative to root
+        /// </summary>
+        /// <param name="org">The Organization code for the service owner</param>
+        /// <param name="service">The service code for the current service</param>
+        /// <param name="fileName">The name of file path relative to service root directory</param>
+        /// <returns>The fileContent</returns>
+        string GetFileByRelativePath(string org, string service, string fileName);
 
         /// <summary>
         /// Get content of resource file
@@ -199,14 +209,14 @@ namespace AltinnCore.Common.Services.Interfaces
         bool CreateOrg(OrgConfiguration ownerConfig);
 
         /// <summary>
-        /// Creates a new service folder under the given <paramref name="org">service owner</paramref> and saves the
-        /// given <paramref name="serviceConfiguration"/>
+        /// Creates a new service folder under the given <paramref name="owner">service owner</paramref> and saves the
+        /// given <paramref name="serviceConfig"/>
         /// </summary>
-        /// <param name="org">The service owner to create the new service under</param>
+        /// <param name="owner">The service owner to create the new service under</param>
         /// <param name="serviceConfig">The service configuration to save</param>
         /// <param name="repoCreated">whether the repo is created or not</param>
-        /// <returns>Was the service creation successful</returns>
-        bool CreateService(string org, ServiceConfiguration serviceConfig, bool repoCreated = false);
+        /// <returns>The repository created in gitea</returns>
+        RepositoryClient.Model.Repository CreateService(string owner, ServiceConfiguration serviceConfig, bool repoCreated = false);
 
         /// <summary>
         ///  Deletes a service folder from disk
@@ -249,6 +259,30 @@ namespace AltinnCore.Common.Services.Interfaces
         List<AltinnCoreFile> GetImplementationFiles(string org, string service);
 
         /// <summary>
+        /// Returns a list over the dynamics files for a Altinn Core service
+        /// </summary>
+        /// <param name="org">The Organization code for the service owner</param>
+        /// <param name="service">The service code for the current service</param>
+        /// <returns>A list of file names</returns>
+        List<AltinnCoreFile> GetDynamicsFiles(string org, string service);
+
+        /// <summary>
+        /// Returns the list over files in the Calculation directory
+        /// </summary>
+        /// <param name="org">The Organization code for the service owner</param>
+        /// <param name="service">The service code for the current service</param>
+        /// <returns>A list of file names</returns>
+        List<AltinnCoreFile> GetCalculationFiles(string org, string service);
+
+        /// <summary>
+        /// Returns a list over the validation files for a Altinn Core service
+        /// </summary>
+        /// <param name="org">The Organization code for the service owner</param>
+        /// <param name="service">The service code for the current service</param>
+        /// <returns>A list of file names</returns>
+        List<AltinnCoreFile> GetValidationFiles(string org, string service);
+
+        /// <summary>
         /// Returns the file Content of a
         /// </summary>
         /// <param name="org">The Organization code for the service owner</param>
@@ -285,6 +319,16 @@ namespace AltinnCore.Common.Services.Interfaces
         void SaveResourceFile(string org, string service, string fileName, string fileContent);
 
         /// <summary>
+        /// Method that stores contents of file path relative to root
+        /// </summary>
+        /// <param name="org">The Organization code for the service owner</param>
+        /// <param name="service">The service code for the current service</param>
+        /// <param name="fileName">The name on config</param>
+        /// <param name="fileContent">The content</param>
+        /// <returns>A boolean indicating if everything went ok</returns>
+        bool SaveFile(string org, string service, string fileName, string fileContent);
+
+        /// <summary>
         /// Save service texts to resource files
         /// </summary>
         /// <param name="org">The Organization code for the service owner</param>
@@ -299,6 +343,14 @@ namespace AltinnCore.Common.Services.Interfaces
         /// <param name="service">The service code for the current service</param>
         /// <returns>Returns the XSD from file as a string.</returns>
         string GetXsdModel(string org, string service);
+
+        /// <summary>
+        /// Get Json Schema model from disk
+        /// </summary>
+        /// <param name="org">The Organization code for the service owner</param>
+        /// <param name="service">The service code for the current service</param>
+        /// <returns>Returns the Json Schema from file as a string.</returns>
+        string GetJsonSchemaModel(string org, string service);
 
         /// <summary>
         /// Returns a given service resource embedded in a service

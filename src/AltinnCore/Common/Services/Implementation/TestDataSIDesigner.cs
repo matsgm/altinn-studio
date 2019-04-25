@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Http;
 using System.Text;
-using System.Threading.Tasks;
 using AltinnCore.Common.Configuration;
-using AltinnCore.Common.Helpers;
 using AltinnCore.Common.Services.Interfaces;
-using AltinnCore.ServiceLibrary;
-using Microsoft.AspNetCore.Http;
+using AltinnCore.ServiceLibrary.Models;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -46,17 +42,19 @@ namespace AltinnCore.Common.Services.Implementation
         public List<ServiceInstance> GetFormInstances(int partyId, string org, string service, string developer = null)
         {
             List<ServiceInstance> formInstances = new List<ServiceInstance>();
-            string formDataFilePath = _settings.GetTestdataForPartyPath(org, service, developer) + partyId;
-            string archiveFolderPath = $"{formDataFilePath}/Archive/";
+            string instancesPath = $"{_settings.GetTestdataForPartyPath(org, service, developer)}{partyId}";
+            string archiveFolderPath = $"{instancesPath}/Archive/";
             if (!Directory.Exists(archiveFolderPath))
             {
                 Directory.CreateDirectory(archiveFolderPath);
             }
 
-            string[] files = Directory.GetFiles(formDataFilePath);
+            string[] files = Directory.GetDirectories(instancesPath);
             foreach (string file in files)
             {
-                if (int.TryParse(Path.GetFileNameWithoutExtension(file), out int instanceId))
+                string instance = new DirectoryInfo(file).Name;
+
+                if (Guid.TryParse(instance, out Guid instanceId))
                 {
                     ServiceInstance serviceInstance = new ServiceInstance()
                     {

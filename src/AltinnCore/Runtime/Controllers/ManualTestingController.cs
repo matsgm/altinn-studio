@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -10,7 +11,9 @@ using AltinnCore.Common.Configuration;
 using AltinnCore.Common.Constants;
 using AltinnCore.Common.Helpers;
 using AltinnCore.Common.Services.Interfaces;
-using AltinnCore.ServiceLibrary;
+using AltinnCore.ServiceLibrary.Enums;
+using AltinnCore.ServiceLibrary.Models;
+using AltinnCore.ServiceLibrary.Models.Workflow;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -34,8 +37,10 @@ namespace AltinnCore.Runtime.Controllers
         private IExecution _execution;
         private UserHelper _userHelper;
         private readonly ServiceRepositorySettings _settings;
+        private readonly TestdataRepositorySettings _testdataRepositorySettings;
         private readonly IGitea _giteaApi;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IWorkflowSI _workflowSI;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ManualTestingController"/> class
@@ -48,6 +53,8 @@ namespace AltinnCore.Runtime.Controllers
         /// <param name="giteaWrapper">the gitea wrapper handler</param>
         /// <param name="contextAccessor">The http context accessor</param>
         /// <param name="execution">The executionSI</param>
+        /// <param name="testdataRepositorySettings">The test data settings</param>
+        /// <param name="workflowSI">The workflowSI</param>
         public ManualTestingController(
             ITestdata testdataService,
             IProfile profileService,
@@ -56,7 +63,9 @@ namespace AltinnCore.Runtime.Controllers
             IOptions<ServiceRepositorySettings> repositorySettings,
             IGitea giteaWrapper,
             IExecution execution,
-            IHttpContextAccessor contextAccessor)
+            IHttpContextAccessor contextAccessor,
+            IOptions<TestdataRepositorySettings> testdataRepositorySettings,
+            IWorkflowSI workflowSI)
         {
             _testdata = testdataService;
             _profile = profileService;
@@ -67,6 +76,8 @@ namespace AltinnCore.Runtime.Controllers
             _giteaApi = giteaWrapper;
             _execution = execution;
             _httpContextAccessor = contextAccessor;
+            _testdataRepositorySettings = testdataRepositorySettings.Value;
+            _workflowSI = workflowSI;
         }
 
         /// <summary>
@@ -82,7 +93,8 @@ namespace AltinnCore.Runtime.Controllers
         {
             var developer = AuthenticationHelper.GetDeveloperUserName(_httpContextAccessor.HttpContext);
             string apiUrl = _settings.GetRuntimeAPIPath("ZipAndSendRepo", org, service, developer);
-            using (HttpClient client = new HttpClient())
+
+            using (HttpClient client = AuthenticationHelper.GetDesignerHttpClient(_httpContextAccessor.HttpContext, _testdataRepositorySettings.GetDesignerHost()))
             {
                 client.BaseAddress = new Uri(apiUrl);
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
@@ -109,7 +121,7 @@ namespace AltinnCore.Runtime.Controllers
                 ZipFile.ExtractToDirectory(zipPath, extractPath);
             }
 
-            RequestContext requestContext = RequestHelper.GetRequestContext(Request.Query, 0);
+            RequestContext requestContext = RequestHelper.GetRequestContext(Request.Query, Guid.Empty);
             requestContext.UserContext = _userHelper.GetUserContext(HttpContext);
             requestContext.Reportee = requestContext.UserContext.Reportee;
 
@@ -123,7 +135,10 @@ namespace AltinnCore.Runtime.Controllers
                     .Select(x => new SelectListItem { Text = x.PrefillKey + " " + x.LastChanged, Value = x.PrefillKey })
                     .ToList(),
                 ReporteeID = requestContext.Reportee.PartyId,
+                Org = org,
+                Service = service,
             };
+
             if (reporteeId != 0 && reporteeId != startServiceModel.ReporteeID && startServiceModel.ReporteeList.Any(r => r.Value.Equals(reporteeId.ToString())))
             {
                 startServiceModel.ReporteeID = reporteeId;
@@ -137,6 +152,23 @@ namespace AltinnCore.Runtime.Controllers
             ViewBag.InstanceList = formInstances.OrderBy(r => r.LastChanged).ToList();
 
             return View(startServiceModel);
+        }
+
+        /// <summary>
+        /// Redirects the user to the correct url given the service instances state
+        /// </summary>
+        /// <param name="org">The Organization code for the service owner</param>
+        /// <param name="service">The service code for the current service</param>
+        /// <param name="instanceId">The instance id</param>
+        /// <returns>The test message box</returns>
+        [Authorize]
+        public IActionResult RedirectToCorrectState(string org, string service, Guid instanceId)
+        {
+            RequestContext requestContext = RequestHelper.GetRequestContext(Request.Query, Guid.Empty);
+            requestContext.UserContext = _userHelper.GetUserContext(HttpContext);
+            ServiceState currentState = _workflowSI.GetCurrentState(instanceId, org, service, requestContext.UserContext.ReporteeId);
+            string nextUrl = _workflowSI.GetUrlForCurrentState(instanceId, org, service, currentState.State);
+            return Redirect(nextUrl);
         }
 
         /// <summary>
@@ -184,9 +216,8 @@ namespace AltinnCore.Runtime.Controllers
                 // Temporary catch errors until we figure out how to force this.
                 try
                 {
-                    string sessionId = Request.Cookies[_settings.GiteaCookieName];
-                    AltinnCore.RepositoryClient.Model.User user = _giteaApi.GetCurrentUser(sessionId).Result;
-                    if (user == null)
+                    string user = _giteaApi.GetUserNameFromUI().Result;
+                    if (string.IsNullOrEmpty(user))
                     {
                         if (Environment.GetEnvironmentVariable("GiteaEndpoint") != null)
                         {
@@ -196,7 +227,7 @@ namespace AltinnCore.Runtime.Controllers
                         return Redirect(_settings.GiteaLoginUrl);
                     }
 
-                    developer = user.Login;
+                    developer = user;
                 }
                 catch (Exception ex)
                 {
@@ -208,7 +239,7 @@ namespace AltinnCore.Runtime.Controllers
             var claims = new List<Claim>();
             const string Issuer = "https://altinn.no";
             claims.Add(new Claim(AltinnCoreClaimTypes.UserName, profile.UserName, ClaimValueTypes.String, Issuer));
-            if (profile.UserType.Equals(UserType.Identified))
+            if (profile.UserType.Equals(UserType.SSNIdentified))
             {
                 claims.Add(new Claim(AltinnCoreClaimTypes.SSN, profile.Party.Person.SSN, ClaimValueTypes.String, Issuer));
             }

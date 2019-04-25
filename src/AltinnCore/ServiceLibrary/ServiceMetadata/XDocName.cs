@@ -197,6 +197,21 @@ namespace AltinnCore.ServiceLibrary.ServiceMetadata
         public static readonly XName Sequence = XSDNS + "sequence";
 
         /// <summary>
+        /// XName for the any element
+        /// </summary>
+        public static readonly XName Any = XSDNS + "any";
+
+        /// <summary>
+        /// XName for the list element
+        /// </summary>
+        public static readonly XName List = XSDNS + "list";
+
+        /// <summary>
+        /// XName for the choice element
+        /// </summary>
+        public static readonly XName Choice = XSDNS + "choice";
+
+        /// <summary>
         /// XName for the attribute element
         /// </summary>
         public static readonly XName Attribute = XSDNS + "attribute";

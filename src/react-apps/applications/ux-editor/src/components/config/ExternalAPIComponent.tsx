@@ -188,7 +188,7 @@ export class ExternalApiComponent extends React.Component<IExternalApiComponentP
                 <div className='col-12 col'>
                   <SelectDataModelComponent
                     onDataModelChange={this.props.handleClientParamsChange.bind(null, clientParams[key].name)}
-                    selectedElement={selectedDataModelElement}
+                    selectedElement={selectedDataModelElement[key]}
                     hideRestrictions={true}
                     language={this.props.language}
                   />
@@ -382,7 +382,7 @@ export class ExternalApiComponent extends React.Component<IExternalApiComponentP
                               className='a-btn a-btn-icon'
                               onClick={this.props.removeMapping.bind(null, id)}
                             >
-                              <i className='ai ai-circle-exit a-danger ai-left' />
+                              <i className='fa fa-circle-exit a-danger ai-left' />
                             </button>
                           </div>
                         </div>

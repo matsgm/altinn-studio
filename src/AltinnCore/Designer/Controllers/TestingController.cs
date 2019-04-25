@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using AltinnCore.Common.Services.Interfaces;
 using AltinnCore.ServiceLibrary.ServiceMetadata;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AltinnCore.Designer.Controllers
@@ -8,6 +9,7 @@ namespace AltinnCore.Designer.Controllers
     /// <summary>
     /// Controller containing all actions related to testing of services
     /// </summary>
+    [Authorize]
     public class TestingController : Controller
     {
         private readonly ITestingRepository _testingRepository;
@@ -78,7 +80,7 @@ namespace AltinnCore.Designer.Controllers
         /// <param name="org">The service owner code</param>
         /// <param name="service">The service code</param>
         /// <param name="id">The name of the test</param>
-        /// <returns>The contents of the test identified by the given <paramref name="name"/></returns>
+        /// <returns>The contents of the test identified by the given <paramref name="id"/></returns>
         public IActionResult Edit(string org, string service, string id)
         {
             var meta = new TestMetadata

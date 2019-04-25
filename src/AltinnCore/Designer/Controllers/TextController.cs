@@ -1,8 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using AltinnCore.Common.Configuration;
+using AltinnCore.Common.Helpers;
 using AltinnCore.Common.Services.Interfaces;
+using AltinnCore.ServiceLibrary.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace AltinnCore.Designer.Controllers
@@ -10,20 +18,27 @@ namespace AltinnCore.Designer.Controllers
     /// <summary>
     /// Controller for resources
     /// </summary>
+    [Authorize]
     public class TextController : Controller
     {
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IRepository _repository;
+        private readonly ServiceRepositorySettings _settings;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TextController"/> class
         /// </summary>
         /// <param name="hostingEnvironment">The hosting environment service</param>
         /// <param name="repositoryService">The serviceRepository service</param>
-        public TextController(IHostingEnvironment hostingEnvironment, IRepository repositoryService)
+        /// <param name="repositorySettings">The repository settings</param>
+        /// <param name="httpContextAccessor">The http context accessor</param>
+        public TextController(IHostingEnvironment hostingEnvironment, IRepository repositoryService, IOptions<ServiceRepositorySettings> repositorySettings, IHttpContextAccessor httpContextAccessor)
         {
             _hostingEnvironment = hostingEnvironment;
             _repository = repositoryService;
+            _settings = repositorySettings.Value;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         /// <summary>
@@ -126,6 +141,69 @@ namespace AltinnCore.Designer.Controllers
 
             JsonResult result = new JsonResult(resourceJson);
             return result;
+        }
+
+        /// <summary>
+        /// Method to retrieve service name from textresources file
+        /// </summary>
+        /// <param name="org">the owner of the service</param>
+        /// <param name="service">the service</param>
+        /// <returns>The service name of the service</returns>
+        [HttpGet]
+        public string GetServiceName(string org, string service)
+        {
+            string defaultLang = "nb-NO";
+            string filename = $"resource.{defaultLang}.json";
+            string serviceResourceDirectoryPath = _settings.GetResourcePath(org, service, AuthenticationHelper.GetDeveloperUserName(_httpContextAccessor.HttpContext)) + filename;
+            string serviceName = string.Empty;
+
+            if (System.IO.File.Exists(serviceResourceDirectoryPath))
+            {
+                string textResource = System.IO.File.ReadAllText(serviceResourceDirectoryPath, Encoding.UTF8);
+                ResourceCollection textResourceObject = JsonConvert.DeserializeObject<ResourceCollection>(textResource);
+                if (textResourceObject != null)
+                {
+                    serviceName = textResourceObject.Resources.FirstOrDefault(r => r.Id == "ServiceName") != null ? textResourceObject.Resources.FirstOrDefault(r => r.Id == "ServiceName").Value : string.Empty;
+                }
+            }
+
+            return serviceName;
+        }
+
+        /// <summary>
+        /// Method to save the updated service name to the textresources file
+        /// </summary>
+        /// <param name="org">the owner of the service</param>
+        /// <param name="service">the service</param>
+        /// <param name="serviceName">The service name</param>
+        [HttpPost]
+        public void SetServiceName(string org, string service, [FromBody] dynamic serviceName)
+        {
+            string defaultLang = "nb-NO";
+            string filename = $"resource.{defaultLang}.json";
+            string serviceResourceDirectoryPath = _settings.GetResourcePath(org, service, AuthenticationHelper.GetDeveloperUserName(_httpContextAccessor.HttpContext)) + filename;
+            if (System.IO.File.Exists(serviceResourceDirectoryPath))
+            {
+                string textResource = System.IO.File.ReadAllText(serviceResourceDirectoryPath, Encoding.UTF8);
+
+                ResourceCollection textResourceObject = JsonConvert.DeserializeObject<ResourceCollection>(textResource);
+
+                if (textResourceObject != null)
+                {
+                    textResourceObject.Add("ServiceName", serviceName.serviceName.ToString());
+                }
+
+                _repository.SaveResource(org, service, "nb-NO", JObject.FromObject(textResourceObject).ToString());
+            }
+            else
+            {
+                JObject json = JObject.FromObject(new
+                {
+                    language = "nb-NO",
+                    resources = new[] { new { id = "ServiceName", value = serviceName.serviceName.ToString() } },
+                });
+                _repository.SaveResource(org, service, "nb-NO", json.ToString());
+            }
         }
     }
 }

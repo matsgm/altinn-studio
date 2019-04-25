@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: altinn-designer
+  labels:
+    run: altinn-designer
+spec:
+  ports:
+  {{- range $port := .Values.service.ports }}
+    - port: {{ $port.port }}
+      targetPort: {{ $port.targetPort }}
+      protocol: {{ $port.protocol }}
+  {{- end }}
+  selector:
+    run: altinn-designer

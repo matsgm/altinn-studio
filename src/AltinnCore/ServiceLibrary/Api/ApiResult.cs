@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
+using AltinnCore.ServiceLibrary.Enums;
 
 namespace AltinnCore.ServiceLibrary.Api
 {
@@ -18,6 +20,11 @@ namespace AltinnCore.ServiceLibrary.Api
         public List<ApiModelStateEntry> ModelStateEntries { get; set; }
 
         /// <summary>
+        /// Gets or sets the ValidationResult
+        /// </summary>
+        public ApiValidationResult ValidationResult { get; set; }
+
+        /// <summary>
         /// Gets or sets the Message
         /// </summary>
         public string Message { get; set; }
@@ -25,6 +32,16 @@ namespace AltinnCore.ServiceLibrary.Api
         /// <summary>
         /// Gets or sets the InstanceId
         /// </summary>
-        public int InstanceId { get; set; }
+        public Guid InstanceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the url for the next step of the workflow
+        /// </summary>
+        public string NextStepUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets the next state of the workflow
+        /// </summary>
+        public Enums.WorkflowStep NextState { get; set; }
     }
 }

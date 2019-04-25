@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using AltinnCore.Common.Configuration;
 using AltinnCore.Common.Helpers;
 using AltinnCore.Common.Services.Interfaces;
-using AltinnCore.ServiceLibrary;
+using AltinnCore.ServiceLibrary.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -52,7 +52,7 @@ namespace AltinnCore.Common.Services.Implementation
         {
             string apiUrl = _settings.GetRuntimeAPIPath(GetFormInstancesApiMethod, org, service, developer, partyId);
             List<ServiceInstance> returnList = new List<ServiceInstance>();
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = AuthenticationHelper.GetDesignerHttpClient(_httpContextAccessor.HttpContext, _testdataRepositorySettings.GetDesignerHost()))
             {
                 client.BaseAddress = new Uri(apiUrl);
                 Task<HttpResponseMessage> response = client.GetAsync(apiUrl);
@@ -86,7 +86,7 @@ namespace AltinnCore.Common.Services.Implementation
         {
             string apiUrl = _settings.GetRuntimeAPIPath(GetServicePrefillApiMethod, org, service, developer, partyId);
             List<ServicePrefill> returnList = new List<ServicePrefill>();
-            using (HttpClient client = new HttpClient())
+            using (HttpClient client = AuthenticationHelper.GetDesignerHttpClient(_httpContextAccessor.HttpContext, _testdataRepositorySettings.GetDesignerHost()))
             {
                 client.BaseAddress = new Uri(apiUrl);
                 Task<HttpResponseMessage> response = client.GetAsync(apiUrl);

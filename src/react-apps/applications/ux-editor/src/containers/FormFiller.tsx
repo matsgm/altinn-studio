@@ -7,8 +7,9 @@ import FormFillerActionDispatchers from '../actions/formFillerActions/formFiller
 import { makeGetDataModelSelector, makeGetDesignModeSelector } from '../selectors/getAppData';
 import { makeGetFormDataCountSelector, makeGetUnsavedChangesSelector, makeGetValidationErrorsSelector } from '../selectors/getFormData';
 import { makeGetApiConnectionsSelector } from '../selectors/getServiceConfigurations';
+import { getTextResource } from '../utils/language';
 import { Preview } from './Preview';
-import { WorkflowStep } from './WorkflowStep';
+import { WorkflowStep, WorkflowSteps } from './WorkflowStep';
 
 export interface IFormFillerProps {
   validationErrors: any[];
@@ -18,15 +19,36 @@ export interface IFormFillerProps {
   designMode: boolean;
   formDataCount: number;
   language: any;
+  workflowStep: WorkflowSteps;
+  textResources: any[];
 }
 
-export interface IFormFillerState { }
+export interface IFormFillerState {
+  workflowStep: WorkflowSteps;
+}
 
 /**
  * Component responsible for rendering the layout around the
  * form itself.
  */
 export class FormFillerComponent extends React.Component<IFormFillerProps, IFormFillerState> {
+
+  public static getDerivedStateFromProps(props: IFormFillerProps, state: IFormFillerState): IFormFillerState {
+    if (props.workflowStep !== state.workflowStep) {
+      return {
+        workflowStep: props.workflowStep,
+      };
+    } else {
+      return null;
+    }
+  }
+
+  constructor(props: IFormFillerProps, state: IFormFillerState) {
+    super(props, state);
+    this.state = {
+      workflowStep: props.workflowStep,
+    };
+  }
 
   public componentDidMount() {
     AppConfigActionDispatcher.setDesignMode(false);
@@ -42,42 +64,47 @@ export class FormFillerComponent extends React.Component<IFormFillerProps, IForm
   public saveFormData = () => {
     const altinnWindow: IAltinnWindow = window as IAltinnWindow;
     const { reportee, org, service, instanceId } = altinnWindow;
-    if (window.location.pathname.split('/')[1].toLowerCase() === 'runtime') {
-      FormFillerActionDispatchers.submitFormData(`
+    FormFillerActionDispatchers.submitFormData(`
         ${window.location.origin}/runtime/api/${reportee}/${org}/${service}/${instanceId}`);
-    }
   }
 
   public submitForm = () => {
     const altinnWindow: IAltinnWindow = window as IAltinnWindow;
-    const { org, service, instanceId } = altinnWindow;
-    if (window.location.pathname.split('/')[1].toLowerCase() === 'runtime') {
-      window.location.replace(`${window.location.origin}/runtime/` +
-        `${org}/${service}/${instanceId}/CompleteAndSendIn`);
-    }
+    const { reportee, org, service, instanceId } = altinnWindow;
+    FormFillerActionDispatchers.submitFormData(`
+      ${window.location.origin}/runtime/api/${reportee}/${org}/${service}/${instanceId}`, 'Complete');
   }
 
   public renderSaveButton = () => {
+    const disabled = !this.props.unsavedChanges;
     return (
       <button
         type='submit'
-        className={Object.keys(this.props.validationErrors).length === 0 && this.props.unsavedChanges ?
-          'a-btn a-btn-success' : 'a-btn a-btn-success disabled'}
+        className={disabled ?
+          'a-btn a-btn-success disabled' : 'a-btn a-btn-success'}
         onClick={this.saveFormData}
+        disabled={disabled}
       >
         {this.props.language.general.save}
       </button>
     );
   }
 
+  public handleStepChange = (step: WorkflowSteps) => {
+    this.setState({
+      workflowStep: step,
+    });
+  }
+
   public renderSubmitButton = () => {
+    const disabled = (this.props.formDataCount > 0 && Object.keys(this.props.validationErrors).length !== 0)
+      || this.props.unsavedChanges || this.props.formDataCount === 0;
     return (
       <button
         type='submit'
-        className={Object.keys(this.props.validationErrors).length === 0 && !this.props.unsavedChanges
-          && this.props.formDataCount > 0 ?
-          'a-btn a-btn-success' : 'a-btn a-btn-success disabled'}
+        className={disabled ? 'a-btn a-btn-success disabled' : 'a-btn a-btn-success'}
         onClick={this.submitForm}
+        disabled={disabled}
       >
         {this.props.language.general.control_submit}
       </button>
@@ -85,10 +112,12 @@ export class FormFillerComponent extends React.Component<IFormFillerProps, IForm
   }
 
   public render() {
-    const altinnWindow = window as IAltinnWindow;
-    const { service } = altinnWindow;
     return (
-      <WorkflowStep header={service}>
+      <WorkflowStep
+        header={getTextResource('ServiceName', this.props.textResources)}
+        step={this.state.workflowStep}
+        onStepChange={this.handleStepChange}
+      >
         <div className='row'>
           <Preview />
         </div>
@@ -119,6 +148,8 @@ const makeMapStateToProps = () => {
       designMode: GetDesignMode(state),
       formDataCount: GetFormDataCount(state),
       language: state.appData.language.language,
+      workflowStep: state.workflow.workflowStep,
+      textResources: state.appData.textResources.resources,
     };
   };
   return mapStateToProps;

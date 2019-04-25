@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using AltinnCore.Common.Configuration;
 using AltinnCore.Common.Models;
 using AltinnCore.Common.Services.Interfaces;
-using AltinnCore.ServiceLibrary;
 using AltinnCore.ServiceLibrary.Extensions;
+using AltinnCore.ServiceLibrary.Models;
 using AltinnCore.ServiceLibrary.ServiceMetadata;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -153,11 +153,11 @@ namespace AltinnCore.Runtime.Controllers
             userMessages.Sort();
 
             return new ServiceStatusViewModel
-                       {
-                           ServiceIdentifier = serviceIdentifier,
-                           CodeCompilationMessages = FilterCompilationInfos(compilationResult).ToList(),
-                           UserMessages = userMessages,
-                       };
+            {
+                ServiceIdentifier = serviceIdentifier,
+                CodeCompilationMessages = FilterCompilationInfos(compilationResult).ToList(),
+                UserMessages = userMessages,
+            };
         }
 
         private IEnumerable<ServiceStatusViewModel.UserMessage> ServiceMetadataMessages(
@@ -170,7 +170,7 @@ namespace AltinnCore.Runtime.Controllers
             }
 
             var routParameters =
-                new { org = serviceMetadata.Org, service = serviceMetadata.Service };
+                new { org = serviceMetadata.Org, service = serviceMetadata.RepositoryName };
             if (serviceMetadata.Elements == null || !serviceMetadata.Elements.Any())
             {
                 var dataModellMissing = ServiceStatusViewModel.UserMessage.Error("Tjenestens datamodell mangler");
@@ -187,7 +187,8 @@ namespace AltinnCore.Runtime.Controllers
                 () =>
                     _compilation.CreateServiceAssembly(
                         serviceIdentifier.Org,
-                        serviceIdentifier.Service);
+                        serviceIdentifier.Service,
+                        true);
             return Task<CodeCompilationResult>.Factory.StartNew(compile);
         }
 

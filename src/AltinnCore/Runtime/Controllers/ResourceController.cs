@@ -6,9 +6,6 @@ using AltinnCore.ServiceLibrary.ServiceMetadata;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
-/// <summary>
-///
-/// </summary>
 namespace AltinnCore.Runtime.Controllers
 {
     /// <summary>
@@ -37,6 +34,23 @@ namespace AltinnCore.Runtime.Controllers
         public IActionResult Index(string org, string service, string id)
         {
             byte[] fileContent = _execution.GetServiceResource(org, service, id);
+
+            if (fileContent != null)
+            {
+                return new FileContentResult(fileContent, MimeTypeMap.GetMimeType(Path.GetExtension(id).ToLower()));
+            }
+
+            return StatusCode(404);
+        }
+
+        /// <summary>
+        /// Method to retrieve the runtime resources
+        /// </summary>
+        /// <returns>File content with content type set</returns>
+        public IActionResult RuntimeResource(string id)
+        {
+            byte[] fileContent = _execution.GetRuntimeResource(id);
+
             if (fileContent != null)
             {
                 return new FileContentResult(fileContent, MimeTypeMap.GetMimeType(Path.GetExtension(id).ToLower()));

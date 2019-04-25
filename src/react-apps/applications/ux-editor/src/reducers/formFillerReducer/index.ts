@@ -7,6 +7,7 @@ export interface IFormFillerState {
   formData: any;
   validationErrors: any;
   unsavedChanges: boolean;
+  apiResult?: any;
 }
 
 const initialState: IFormFillerState = {
@@ -24,7 +25,8 @@ const formFillerReducer: Reducer<IFormFillerState> = (
   }
 
   switch (action.type) {
-    case FormFillerActionTypes.UPDATE_VALIDATIONERRORS: {
+    case FormFillerActionTypes.UPDATE_VALIDATIONERRORS:
+    case FormFillerActionTypes.RUN_SINGLE_FIELD_VALIDATION_FULFILLED: {
       const {
         validationErrors,
       } = action as FormFillerActions.IUpdateValidationErrors;
@@ -91,9 +93,16 @@ const formFillerReducer: Reducer<IFormFillerState> = (
     }
 
     case (FormFillerActionTypes.SUBMIT_FORM_DATA_FULFILLED): {
+      const { apiResult } = action as FormFillerActions.ISubmitFormDataActionFulfilled;
       return update<IFormFillerState>(state, {
         unsavedChanges: {
           $set: false,
+        },
+        apiResult: {
+          $set: apiResult,
+        },
+        validationErrors: {
+          $set: {},
         },
       });
     }

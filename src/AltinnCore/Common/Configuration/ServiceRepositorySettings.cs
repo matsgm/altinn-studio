@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using AltinnCore.Common.Models;
+using Newtonsoft.Json;
 
 namespace AltinnCore.Common.Configuration
 {
@@ -18,10 +21,30 @@ namespace AltinnCore.Common.Configuration
         public const string RESOURCE_FOLDER_NAME = "Resources/";
 
         /// <summary>
+        /// Constant for the location of implementation files
+        /// </summary>
+        public const string IMPLEMENTATION_FOLDER_NAME = "Implementation/";
+
+        /// <summary>
+        /// Constant for the location of dynamics files
+        /// </summary>
+        public const string DYNAMICS_FOLDER_NAME = "Dynamics/";
+
+        /// <summary>
+        /// Constant for the location of calculation files
+        /// </summary>
+        public const string CALCULATION_FOLDER_NAME = "Calculation/";
+
+        /// <summary>
+        /// Constant for the location of validation files
+        /// </summary>
+        public const string VALIDATION_FOLDER_NAME = "Validation/";
+
+        /// <summary>
         /// Constant for the location of the testdata for parties folder
         /// </summary>
         public const string TESTDATA_FOR_PARTY_FOLDER_NAME = "Testdataforparty/";
-        
+
         /// <summary>
         /// Constant for the location of service tests
         /// </summary>
@@ -30,7 +53,7 @@ namespace AltinnCore.Common.Configuration
         /// <summary>
         /// Constant for the location of service deployment charts
         /// </summary>
-        public const string DEPLOYMENT_FOLDER_NAME = "Deployment/";
+        public const string DEPLOYMENT_FOLDER_NAME = "deployment/";
 
         /// <summary>
         /// Constant for the service binaries
@@ -56,7 +79,10 @@ namespace AltinnCore.Common.Configuration
         private const string TEMP_LOCATION = "Temp/";
         private const string TESTDATA_FOLDER_NAME = "Data/";
 
-        private const string METADATA_FILENAME = "ServiceMetadata.json";
+        /// <summary>
+        /// Constant for the location of service metadata file
+        /// </summary>
+        public const string METADATA_FILENAME = "ServiceMetadata.json";
         private const string GENERATED_METHODS_FILENAME = "GeneratedMethods.cs";
 
         /// <summary>
@@ -115,6 +141,11 @@ namespace AltinnCore.Common.Configuration
         public string GiteaLoginUrl { get; set; }
 
         /// <summary>
+        /// Gets or sets the DeployCookieName
+        /// </summary>
+        public string DeployCookieName { get; set; }
+
+        /// <summary>
         /// Gets or sets the BaseResourceFolderContainer that identifes where in the docker container the runtime can find files needed
         /// </summary>
         public string BaseResourceFolderContainer { get; set; }
@@ -128,6 +159,11 @@ namespace AltinnCore.Common.Configuration
         /// Gets or sets The name of the ServiceModel xsd file Name
         /// </summary>
         public string ServiceModelXSDFileName { get; set; } = "ServiceModel.xsd";
+
+        /// <summary>
+        /// Gets or sets The name of the ServiceModel json schema jsd file Name
+        /// </summary>
+        public string ServiceModelJsonSchemaFileName { get; set; } = "ServiceModel.schema.json";
 
         /// <summary>
         /// Gets or sets The name of the FormLayout json file Name
@@ -150,19 +186,29 @@ namespace AltinnCore.Common.Configuration
         public string WorkFlowFileName { get; set; } = "workflow.json";
 
         /// <summary>
+        /// Gets or sets the filename for workflow file
+        /// </summary>
+        public string WorkflowFileName { get; set; } = "workflow.bpmn";
+
+        /// <summary>
         /// Gets or sets React file name
         /// </summary>
-        public string ReactAppFileName { get; set; } = "react-app.js";
+        public string RuntimeAppFileName { get; set; } = "runtime.js";
 
         /// <summary>
         /// Gets or sets React CSS file name
         /// </summary>
-        public string ReactAppCssFileName { get; set; } = "react-app.css";
+        public string RuntimeCssFileName { get; set; } = "runtime.css";
 
         /// <summary>
         /// Gets or sets styles config file name for service
         /// </summary>
         public string ServiceStylesConfigFileName { get; set; } = "Styles.json";
+
+        /// <summary>
+        /// Gets or sets config file name for service
+        /// </summary>
+        public string ServiceConfigFileName { get; set; } = "config.json";
 
         /// <summary>
         /// Gets or sets default Bootstrap url
@@ -220,9 +266,33 @@ namespace AltinnCore.Common.Configuration
         public string DockerfileFileName { get; set; } = "Dockerfile";
 
         /// <summary>
+        /// Gets or sets the filename for the altinn service project
+        /// </summary>
+        public string ProjectFileName { get; set; } = "AltinnService.csproj";
+
+        /// <summary>
+        /// Gets or sets the repo search page count used for searching repos
+        /// </summary>
+        public int RepoSearchPageCount { get; set; } = 1337;
+
+        /// <summary>
         /// Gets or sets the filename for the generated methods class
         /// </summary>
         public string GeneratedMethodsFileName { get; set; } = GENERATED_METHODS_FILENAME;
+
+        /// <summary>
+        /// Gets the styles config element
+        /// </summary>
+        public string GetStylesConfig()
+        {
+            StylesConfig stylesConfig = new StylesConfig();
+            stylesConfig.InternalStyles = new List<string>();
+            stylesConfig.InternalStyles.Add(RuntimeCssFileName);
+            stylesConfig.ExternalStyles = new List<string>();
+            stylesConfig.ExternalStyles.Add(DefaultBootstrapUrl);
+
+            return JsonConvert.SerializeObject(stylesConfig);
+        }
 
         /// <summary>
         /// Gets the full path to the org directory
@@ -311,7 +381,7 @@ namespace AltinnCore.Common.Configuration
 
         /// <summary>
         /// Get the path to rule handler file
-        /// </summary
+        /// </summary>
         /// <param name="org">The Organization code for the service owner</param>
         /// <param name="service">The service code for the current service</param>
         /// <param name="developer">the developer for the current service</param>
@@ -360,6 +430,42 @@ namespace AltinnCore.Common.Configuration
         public string GetResourcePath(string org, string service, string developer)
         {
             return GetServicePath(org, service, developer) + RESOURCE_FOLDER_NAME;
+        }
+
+        /// <summary>
+        /// Gets the full path to Dynamics directory (within ResourcesDirecory)
+        /// </summary>
+        /// <param name="org">The Organization code for the service owner</param>
+        /// <param name="service">The service code for the current service</param>
+        /// <param name="developer">the developer for the current service</param>
+        /// <returns>The full path, ending with "/"</returns>
+        public string GetDynamicsPath(string org, string service, string developer)
+        {
+            return GetServicePath(org, service, developer) + RESOURCE_FOLDER_NAME + DYNAMICS_FOLDER_NAME;
+        }
+
+        /// <summary>
+        /// Gets the full path to Calculation directory (within ImplementationDirectory)
+        /// </summary>
+        /// <param name="org">The Organization code for the service owner</param>
+        /// <param name="service">The service code for the current service</param>
+        /// <param name="developer">the developer for the current service</param>
+        /// <returns>The full path to the calculation folder, ending with '/'</returns>
+        public string GetCalculationPath(string org, string service, string developer)
+        {
+            return GetServicePath(org, service, developer) + IMPLEMENTATION_FOLDER_NAME + CALCULATION_FOLDER_NAME;
+        }
+
+        /// <summary>
+        /// Gets the full path to Validation directory (within ImplementationDirectory)
+        /// </summary>
+        /// <param name="org">The Organization code for the service owner</param>
+        /// <param name="service">The service code for the current service</param>
+        /// <param name="developer">the developer for the current service</param>
+        /// <returns>The full path to the validation folder, ending with '/'</returns>
+        public string GetValidationPath(string org, string service, string developer)
+        {
+            return GetServicePath(org, service, developer) + IMPLEMENTATION_FOLDER_NAME + VALIDATION_FOLDER_NAME;
         }
 
         /// <summary>
@@ -441,12 +547,30 @@ namespace AltinnCore.Common.Configuration
         }
 
         /// <summary>
+        /// Get Implementation Folder name
+        /// </summary>
+        /// <returns>The implementation folder</returns>
+        public string GetImplementationFolder()
+        {
+            return IMPLEMENTATION_FOLDER_NAME;
+        }
+
+        /// <summary>
         /// Returns the Metadata folder name
         /// </summary>
         /// <returns>The metadata folder</returns>
         public string GetMetadataFolder()
         {
             return METADATA_FOLDER_NAME;
+        }
+
+        /// <summary>
+        /// Returns the Metadata file name
+        /// </summary>
+        /// <returns>The metadata file name</returns>
+        public string GetMetadataJsonFile()
+        {
+            return METADATA_FILENAME;
         }
 
         /// <summary>
@@ -480,6 +604,18 @@ namespace AltinnCore.Common.Configuration
         public string GetImplementationPath(string org, string service, string developer)
         {
             return GetServicePath(org, service, developer) + "Implementation/";
+        }
+
+        /// <summary>
+        /// Gets the full path to the workflow directory
+        /// </summary>
+        /// <param name="owner">The owner of the service</param>
+        /// <param name="service">The service code for the current service</param>
+        /// <param name="developer">the developer for the current service</param>
+        /// <returns>The full path to the workflow folder, ending with "/"</returns>
+        public string GetWorkflowPath(string owner, string service, string developer)
+        {
+            return GetServicePath(owner, service, developer) + "Workflow/";
         }
 
         /// <summary>
@@ -535,10 +671,19 @@ namespace AltinnCore.Common.Configuration
         /// <param name="service">The name of the service</param>
         /// <param name="developer">The name of the developer of the service</param>
         /// <param name="partyId">The party id of the test user</param>
+        /// <param name="baseEndpoint"> Will be used as the url base if supplied, defaults to null.</param>
         /// <returns>The url path to the runtime api</returns>
-        public string GetRuntimeAPIPath(string nameOfMethod, string org, string service, string developer, int partyId = 0)
+        public string GetRuntimeAPIPath(string nameOfMethod, string org, string service, string developer, int partyId = 0, string baseEndpoint = null)
         {
-            string runtimeAPIEndPoint = Environment.GetEnvironmentVariable("ServiceRepositorySettings__RuntimeAPIEndPoint") ?? RuntimeAPIEndPoint;
+            string runtimeAPIEndPoint;
+            if (string.IsNullOrEmpty(baseEndpoint))
+            {
+                runtimeAPIEndPoint = Environment.GetEnvironmentVariable("ServiceRepositorySettings__RuntimeAPIEndPoint") ?? RuntimeAPIEndPoint;
+            }
+            else
+            {
+                runtimeAPIEndPoint = baseEndpoint;
+            }
 
             if (partyId == 0)
             {

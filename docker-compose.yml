@@ -4,6 +4,9 @@ networks:
   altinncore_network:
     external: false
 
+volumes:
+  gitea-data:
+
 services:
   altinn_dashboard:
     container_name: studiodashboard
@@ -18,6 +21,13 @@ services:
     build:
       context: .
       dockerfile: src/react-apps/applications/service-development/Dockerfile
+
+  altinn_runtime_app:
+    container_name: altinn-runtime-app
+    image: altinn-runtime-app:latest
+    build:
+      context: .
+      dockerfile: src/react-apps/applications/runtime/Dockerfile
 
   altinn_loadbalancer:
     container_name: altinn-loadbalancer
@@ -54,8 +64,9 @@ services:
       - ServiceRepositorySettings:ApiEndPointHost=altinn-repositories
       - ServiceRepositorySettings:RepositoryBaseURL=http://altinn-repositories:3000/
       - GeneralSettings:TemplateLocation=/Templates
-      - GeneralSettings:DeploymentLocation=/Deployment
+      - GeneralSettings:DeploymentLocation=/Templates/deployment
       - GeneralSettings:LanguageFilesLocation=Languages/
+      - GeneralSettings:AltinnStudioEndpoint=http://altinn3.no/
       - TestdataRepositorySettings:RepositoryLocation=/Testdata
     ports:
       - "5000:5000"
@@ -84,8 +95,12 @@ services:
       - ServiceRepositorySettings:ForceGiteaAuthentication=true
       - ServiceRepositorySettings:ApiEndPoint=http://altinn-repositories:3000/api/v1
       - ServiceRepositorySettings:ApiEndPointHost=altinn-repositories
+      - ServiceRepositorySettings:RepositoryBaseURL=http://altinn-repositories:3000/
       - ServiceRepositorySettings:ShouldFetchFromDatabase=false
+      - GeneralSettings:AltinnStudioEndpoint=http://altinn3.no/
+      - GeneralSettings:LanguageFilesLocation=Languages/
       - TestdataRepositorySettings:RepositoryLocation=/app/Testdata
+      - TestdataRepositorySettings:DesignerHost=altinn-designer
     ports:
       - "5005:5005"
     build:
@@ -94,22 +109,15 @@ services:
 
   altinn_repositories:
     container_name: altinn-repositories
-    image: gitea/gitea:1.5.1
+    image: gitea/gitea:1.7
     restart: always
     networks:
       - altinncore_network
     volumes:
-      - "./src/AltinnRepositories/gitea-data:/data"
+      - "gitea-data:/data"
     ports:
       - "3000:3000"
       - "222:22"
-
-  altinn_runttimedb:
-    container_name: altinn-runtimedb
-    image: altinncoreruntimedb:latest
-    restart: always
-    ports:
-      - "44355:44355"
     build:
       context: .
-      dockerfile: src/AltinnCore/RuntimeDb/Dockerfile
+      dockerfile: src/AltinnRepositories/Dockerfile

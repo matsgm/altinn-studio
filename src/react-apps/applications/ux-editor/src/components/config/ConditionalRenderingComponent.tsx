@@ -104,8 +104,7 @@ class ConditionalRendering extends React.Component<IConditionalRenderingComponen
   /**
    * Methods that updates the input param connections to the datamodel
    */
-  public handleParamDataChange = (paramName: any, e: any): void => {
-    const value = e.target.value;
+  public handleParamDataChange = (paramName: any, value: any): void => {
     this.setState({
       conditionalRendering: {
         ...this.state.conditionalRendering,
@@ -181,7 +180,7 @@ class ConditionalRendering extends React.Component<IConditionalRenderingComponen
   public renderConditionalRenderingTargetComponentOption = (id: string): JSX.Element => {
     return (
       <option key={id} value={id}>
-        {`${this.props.formLayoutComponents[id].title} (id=${id})`}
+        {`${this.props.formLayoutComponents[id].component} (id=${id})`}
       </option>
     );
   }
@@ -229,7 +228,7 @@ class ConditionalRendering extends React.Component<IConditionalRenderingComponen
         <div className='modal-header a-modal-header'>
           <div className='a-iconText a-iconText-background a-iconText-large'>
             <div className='a-iconText-icon'>
-              <i className='ai ai-corp a-icon' />
+              <i className='fa fa-corp a-icon' />
             </div>
             <h1 className='a-iconText-text mb-0'>
               <span className='a-iconText-text-large'>
@@ -354,7 +353,7 @@ class ConditionalRendering extends React.Component<IConditionalRenderingComponen
                           className='a-btn a-btn-icon'
                           onClick={this.removeFieldMapping.bind(null, key)}
                         >
-                          <i className='ai ai-circle-exit a-danger ai-left' />
+                          <i className='fa fa-circle-exit a-danger ai-left' />
                         </button>
                       </div>
                     </div>

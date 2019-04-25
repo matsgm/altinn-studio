@@ -1,4 +1,4 @@
-﻿namespace AltinnCore.Common.Constants
+namespace AltinnCore.Common.Constants
 {
     /// <summary>
     /// Constants that defines the claim types used in Altinn core authentication
@@ -34,5 +34,15 @@
         /// UserName for the service developer
         /// </summary>
         public const string Developer = "Developer";
+
+        /// <summary>
+        /// The app token
+        /// </summary>
+        public const string DeveloperToken = "DeveloperToken";
+
+        /// <summary>
+        /// The app token id
+        /// </summary>
+        public const string DeveloperTokenId = "DeveloperTokenId";
     }
 }

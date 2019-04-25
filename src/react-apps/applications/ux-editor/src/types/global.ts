@@ -4,15 +4,17 @@ import { IFormDesignerState } from '../reducers/formDesignerReducer';
 import { IFormFillerState } from '../reducers/formFillerReducer';
 import { IServiceConfigurationState } from '../reducers/serviceConfigurationReducer';
 import { IThirdPartyComponentsState } from '../reducers/thirdPartyComponentReducer';
+import { IWorkflowState } from '../reducers/workflowReducer';
 
 declare global {
-  export interface IFormDesignerNameSpace<T1, T2, T3, T4, T5, T6> {
+  export interface IFormDesignerNameSpace<T1, T2, T3, T4, T5, T6, T7> {
     formDesigner: T1;
     formFiller: T2;
     serviceConfigurations: T3;
     appData: T4;
     errors: T5;
     thirdPartyComponents: T6;
+    workflow: T7;
   }
   export interface IAppState
     extends IFormDesignerNameSpace
@@ -21,7 +23,8 @@ declare global {
     IServiceConfigurationState,
     IAppDataState,
     IErrorState,
-    IThirdPartyComponentsState> { }
+    IThirdPartyComponentsState,
+    IWorkflowState> { }
   export interface IAltinnEditableComponent {
     ModalContent: () => JSX.Element;
   }
@@ -53,17 +56,21 @@ declare global {
     hidden?: boolean;
   }
 
+  export interface ITextResourceBindings {
+    [id: string]: string;
+  }
+
   export interface ICreateFormComponent {
-    title?: string;
     component: string;
     type?: string;
     name?: string;
     size?: string;
     options?: IOptions[];
-    description?: string;
-    dataModelBinding?: string;
-    textResourceId?: string;
+    dataModelBindings?: IDataModelBindings;
+    textResourceBindings?: ITextResourceBindings;
     customType?: string;
+    codeListId?: string;
+    triggerValidation?: boolean;
     handleUpdateElement?: (component: FormComponentType) => void;
     handleDeleteElement?: () => void;
     handleUpdateFormData?: (formData: any) => void;
@@ -75,6 +82,7 @@ declare global {
     disabled?: boolean;
     required?: boolean;
     hidden?: boolean;
+    readOnly?: boolean;
   }
 
   export interface IFormHeaderComponent extends IFormComponent {
@@ -88,6 +96,7 @@ declare global {
 
   export interface IFormCheckboxComponent extends IFormComponent {
     options: IOptions[];
+    preselectedOptionIndex?: number;
   }
 
   export interface IFormTextAreaComponent extends IFormComponent { }
@@ -98,6 +107,7 @@ declare global {
 
   export interface IFormRadioButtonComponent extends IFormComponent {
     options: IOptions[];
+    preselectedOptionIndex?: number;
   }
 
   export interface IFormDropdownComponent extends IFormComponent {
@@ -106,9 +116,27 @@ declare global {
 
   export interface IFormFileUploaderComponent extends IFormComponent {
     description: string;
+    hasCustomFileEndings: boolean;
+    maxFileSizeInMB: number;
+    displayMode: string;
+    maxNumberOfAttachments: number;
+    validFileEndings?: string;
+  }
+
+  export interface IDataModelBindings {
+    [id: string]: string;
+  }
+
+  export interface IProperties extends IFormComponent {
+    [key: string]: string | any;
+  }
+
+  export interface IFormAddressComponent extends IFormComponent {
+    simplified: boolean;
   }
 
   export type FormComponentType =
+    | IFormComponent
     | IFormHeaderComponent
     | IFormInputComponent
     | IFormCheckboxComponent
@@ -116,10 +144,14 @@ declare global {
     | IFormButtonComponent
     | IFormRadioButtonComponent
     | IFormDropdownComponent
-    | IFormFileUploaderComponent;
+    | IFormFileUploaderComponent
+    | IFormAddressComponent;
 
   export interface IFormDesignerComponent {
     [id: string]: IFormComponent;
+  }
+  export interface IFormDesignerComponentProps {
+    [id: string]: IProperties;
   }
 
   export interface IFormDesignerContainer {
@@ -165,6 +197,9 @@ declare global {
     XName?: string;
     XPath: string;
     XsdValueType?: string;
+    DisplayString: string;
+    XmlSchemaXPath: string;
+    JsonSchemaPointer: string;
   }
 
   export interface IDataModelBinding {

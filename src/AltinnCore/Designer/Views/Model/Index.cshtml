@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewBag.Title = "Datamodell";
     string org = ViewContext.RouteData.Values["org"] as string;
     string service = ViewContext.RouteData.Values["service"] as string;
@@ -21,13 +21,9 @@
             <span id="filebtn">Velg XSD</span>
             <input type="file" name="thefile" id="thefile" accept=".xsd" style="display:none;" />
         </label>
-        <label id="secondaryFilelabel" class="btn btn-secondary form-control-label" for="secondaryFiles">
-            <span id="secondaryFileBtn">Velg flere XSD'er</span>
-            <input type="file" name="secondaryFiles" id="secondaryFiles" multiple accept=".xsd" style="display:none;" disabled />
-        </label>
         <label id="submitLabel" class="form-control-label btn disabled" disabled>
             <span>Last opp</span>
-            <input type="submit" id="submit" value="Last opp" style="display:none;" />
+            <input type="submit" id="submit" value="Last opp" style="display:none;" disabled />
         </label>
     </div>
     <div>
@@ -39,19 +35,12 @@
             $("#thefile").change(function () {
                 var fileName = $(this).val();
                 if ( fileName.substr( 0, 12 ) === "C:\\fakepath\\" ) {
-					fileName = fileName.substr( 12 );
-				}
+					        fileName = fileName.substr( 12 );
+				        }
                 $("#filebtn").text(fileName);
                 $("#filelabel").addClass("disabled");
                 $("#submitLabel").removeClass("disabled").addClass("btn-primary").prop("disabled", false);
-            });
-            $("#secondaryFiles").change(function () {
-                var fileName = $(this).val();
-                if ( fileName.substr( 0, 12 ) === "C:\\fakepath\\" ) {
-					fileName = fileName.substr( 12 );
-				}
-                $("#secondaryFileBtn").text(fileName);
-                $("#secondaryFilelabel").addClass("disabled");
+                $("#submit").prop("disabled", false);
             });
         });
     </script>
@@ -69,6 +58,9 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#xml" role="tab">XSD</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#jsonschema" role="tab">JSON SCHEMA</a>
     </li>
 </ul>
 
@@ -119,6 +111,16 @@
         </div>
         <div id="xml-model" style="display: none;"></div>
     </div>
+
+    <div class="tab-pane fade" id="jsonschema" role="tabpanel">
+        <a title="Last ned Json Schema" asp-action="GetJsonSchema" download="@service-model.schema.json">
+            <i class="fa fa-download" aria-hidden="true"></i><span class="sr-only">Last ned Json Schema</span>
+        </a>
+        <div id="jsonschema-container" class="editor-frame">
+            <div id="jsonschema-editor" class="editor" style="width:100%;min-height:600px;"></div>
+        </div>
+        <div id="jsonschema-model" style="display: none;"></div>
+     </div>
 </div>
 
 <script>
@@ -186,12 +188,12 @@
                                     language: 'json'
                                 });
                                 $('#saveModelChangesBtn').show();
-                                $('#elementName').text(data.model.ID);
+                                $('#elementName').text(data.model.DisplayString);
                             } else {
                                 root.updateModelValue();
 
                                 root.editor.setValue(JSON.stringify(data.model, null, "\t"));
-                                $('#elementName').text(data.model.ID);
+                                $('#elementName').text(data.model.DisplayString);
                             }
 
                             previousNode = data;
@@ -230,6 +232,11 @@
         $.get("@Url.Action("GetXsd")",
             function (data) {
                 $("#xml-model").text(data);
+             });
+
+             $.get("@Url.Action("GetJsonSchema")",
+            function (data) {
+              $("#jsonschema-model").text(data);
             });
 
         $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
@@ -241,6 +248,15 @@
             if (tabId != treeTab) {
                 var editorId = tabId + "-editor";
                 var modelId = tabId + "-model";
+                var tabLanguage;
+                switch (tabId) {
+                  case "json":
+                  case "jsonschema": tabLanguage = "json"; break;
+
+                  case "xsd": tabLanguage = "xsd"; break;
+
+                  default: tabLanguage = tabId; break;
+                }
 
                 var h = $('.tab-content').height();
                 var w = $('.tab-content').width();
@@ -250,7 +266,7 @@
                         value:
                             document.getElementById(modelId).innerText
                         ,
-                        language: tabId
+                        language: tabLanguage
                     });
                     editor.updateOptions({
                         wrappingColumn:0});
@@ -280,6 +296,16 @@
                 removeEmptyNodes(data[y]);
             }
             return data;
+        } 
+
+        function typeElement(element) {
+          var name = element.DisplayString;
+          if (name && name.indexOf(":")) {
+
+            return " " + name.substring(name.indexOf(":"), name.length);
+          }
+
+          return "";
         }
 
         function insertElement(data, element) {
@@ -298,7 +324,7 @@
 
                 if (!elementExists) {
                     var newElement = {
-                        text: element.Name,
+                        text: element.Name + typeElement(element),
                         id: idParts[i],
                         href: "#" + element.ID,
                         nodes: [],

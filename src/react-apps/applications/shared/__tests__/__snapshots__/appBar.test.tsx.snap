@@ -1,0 +1,796 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppBarComponent - src/navigation/main-header/appBar Snapshot should match snapshot 1`] = `
+<div
+  className="AppBarComponent-root-1"
+>
+  <header
+    className="MuiPaper-root-20 MuiPaper-elevation0-22 MuiAppBar-root-11 MuiAppBar-positionStatic-15 MuiAppBar-colorPrimary-18 AppBarComponent-appBar-2"
+    style={
+      Object {
+        "backgroundColor": "#EFEFEF",
+      }
+    }
+  >
+    <div
+      className="MuiToolbar-root-47 MuiToolbar-regular-49 MuiToolbar-gutters-48"
+    >
+      <div
+        className="MuiGrid-container-51 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-space-between-70"
+      >
+        <div
+          className="MuiGrid-container-51 MuiGrid-item-52 MuiGrid-grid-xs-true-79"
+        >
+          <div
+            className="MuiGrid-item-52"
+          >
+            <a
+              className="AppBarComponent-aImgStyling-10"
+              href="http://localhost"
+            >
+              <img
+                src="/designer/img/altinn_logo_header.png"
+              />
+            </a>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-item-52 MuiGrid-grid-xs-true-79 AppBarComponent-paper-5"
+        >
+          jest-test-service
+        </div>
+        <div
+          className="MuiGrid-container-51 MuiGrid-item-52 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-flex-end-69 MuiGrid-grid-xs-true-79"
+        >
+          <div
+            className="MuiGrid-item-52"
+          >
+            jest-test-org
+          </div>
+          <div
+            className="MuiGrid-item-52"
+          >
+            <div>
+              <button
+                aria-haspopup="true"
+                className="MuiButtonBase-root-156 MuiIconButton-root-150"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex="0"
+                type="button"
+              >
+                <span
+                  className="MuiIconButton-label-155"
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-159"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"
+                    />
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                  </svg>
+                </span>
+                <span
+                  className="MuiTouchRipple-root-172"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="MuiToolbar-root-47 MuiToolbar-regular-49 MuiToolbar-gutters-48"
+    >
+      <div
+        className="MuiGrid-container-51 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-center-68"
+      >
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7"
+            href="/aboutservice"
+            onClick={[Function]}
+          >
+            Om
+          </a>
+        </div>
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7 AppBarComponent-subHeaderLinkActive-8"
+            href="/create"
+            onClick={[Function]}
+          >
+            Lage
+          </a>
+        </div>
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7"
+            href="/text"
+            onClick={[Function]}
+          >
+            Språk
+          </a>
+        </div>
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7"
+            href="/testingintestenvironment"
+            onClick={[Function]}
+          >
+            Teste
+          </a>
+        </div>
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7"
+            href="/publish"
+            onClick={[Function]}
+          >
+            Publisere
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+`;
+
+exports[`AppBarComponent - src/navigation/main-header/appBar Snapshot should match snapshot and not render subHeader menu 1`] = `
+<div
+  className="AppBarComponent-root-1"
+>
+  <header
+    className="MuiPaper-root-20 MuiPaper-elevation0-22 MuiAppBar-root-11 MuiAppBar-positionStatic-15 MuiAppBar-colorPrimary-18 AppBarComponent-appBar-2"
+    style={
+      Object {
+        "backgroundColor": "#EFEFEF",
+      }
+    }
+  >
+    <div
+      className="MuiToolbar-root-47 MuiToolbar-regular-49 MuiToolbar-gutters-48"
+    >
+      <div
+        className="MuiGrid-container-51 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-space-between-70"
+      >
+        <div
+          className="MuiGrid-container-51 MuiGrid-item-52 MuiGrid-grid-xs-true-79"
+        >
+          <div
+            className="MuiGrid-item-52"
+          >
+            <a
+              className="AppBarComponent-aImgStyling-10"
+              href="http://localhost"
+            >
+              <img
+                src="/designer/img/altinn_logo_header.png"
+              />
+            </a>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-item-52 MuiGrid-grid-xs-true-79 AppBarComponent-paper-5"
+        >
+          jest-test-service
+        </div>
+        <div
+          className="MuiGrid-container-51 MuiGrid-item-52 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-flex-end-69 MuiGrid-grid-xs-true-79"
+        >
+          <div
+            className="MuiGrid-item-52"
+          >
+            jest-test-org
+          </div>
+          <div
+            className="MuiGrid-item-52"
+          >
+            <div>
+              <button
+                aria-haspopup="true"
+                className="MuiButtonBase-root-156 MuiIconButton-root-150"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex="0"
+                type="button"
+              >
+                <span
+                  className="MuiIconButton-label-155"
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-159"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"
+                    />
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                  </svg>
+                </span>
+                <span
+                  className="MuiTouchRipple-root-172"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+`;
+
+exports[`AppBarComponent - src/navigation/main-header/appBar Snapshot should match snapshot with backgroundColor prop 1`] = `
+<div
+  className="AppBarComponent-root-1"
+>
+  <header
+    className="MuiPaper-root-20 MuiPaper-elevation0-22 MuiAppBar-root-11 MuiAppBar-positionStatic-15 MuiAppBar-colorPrimary-18 AppBarComponent-appBar-2"
+    style={
+      Object {
+        "backgroundColor": "pink",
+      }
+    }
+  >
+    <div
+      className="MuiToolbar-root-47 MuiToolbar-regular-49 MuiToolbar-gutters-48"
+    >
+      <div
+        className="MuiGrid-container-51 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-space-between-70"
+      >
+        <div
+          className="MuiGrid-container-51 MuiGrid-item-52 MuiGrid-grid-xs-true-79"
+        >
+          <div
+            className="MuiGrid-item-52"
+          >
+            <a
+              className="AppBarComponent-aImgStyling-10"
+              href="http://localhost"
+            >
+              <img
+                src="/designer/img/altinn_logo_header.png"
+              />
+            </a>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-item-52 MuiGrid-grid-xs-true-79 AppBarComponent-paper-5"
+        >
+          WARNING: NO SERVICE NAME
+        </div>
+        <div
+          className="MuiGrid-container-51 MuiGrid-item-52 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-flex-end-69 MuiGrid-grid-xs-true-79"
+        >
+          <div
+            className="MuiGrid-item-52"
+          >
+            WARNING: NO ORG
+          </div>
+          <div
+            className="MuiGrid-item-52"
+          >
+            <div>
+              <button
+                aria-haspopup="true"
+                className="MuiButtonBase-root-156 MuiIconButton-root-150"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex="0"
+                type="button"
+              >
+                <span
+                  className="MuiIconButton-label-155"
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-159"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"
+                    />
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                  </svg>
+                </span>
+                <span
+                  className="MuiTouchRipple-root-172"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+`;
+
+exports[`AppBarComponent - src/navigation/main-header/appBar Snapshot should match snapshot with no service or org 1`] = `
+<div
+  className="AppBarComponent-root-1"
+>
+  <header
+    className="MuiPaper-root-20 MuiPaper-elevation0-22 MuiAppBar-root-11 MuiAppBar-positionStatic-15 MuiAppBar-colorPrimary-18 AppBarComponent-appBar-2"
+    style={
+      Object {
+        "backgroundColor": "#EFEFEF",
+      }
+    }
+  >
+    <div
+      className="MuiToolbar-root-47 MuiToolbar-regular-49 MuiToolbar-gutters-48"
+    >
+      <div
+        className="MuiGrid-container-51 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-space-between-70"
+      >
+        <div
+          className="MuiGrid-container-51 MuiGrid-item-52 MuiGrid-grid-xs-true-79"
+        >
+          <div
+            className="MuiGrid-item-52"
+          >
+            <a
+              className="AppBarComponent-aImgStyling-10"
+              href="http://localhost"
+            >
+              <img
+                src="/designer/img/altinn_logo_header.png"
+              />
+            </a>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-item-52 MuiGrid-grid-xs-true-79 AppBarComponent-paper-5"
+        >
+          WARNING: NO SERVICE NAME
+        </div>
+        <div
+          className="MuiGrid-container-51 MuiGrid-item-52 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-flex-end-69 MuiGrid-grid-xs-true-79"
+        >
+          <div
+            className="MuiGrid-item-52"
+          >
+            WARNING: NO ORG
+          </div>
+          <div
+            className="MuiGrid-item-52"
+          >
+            <div>
+              <button
+                aria-haspopup="true"
+                className="MuiButtonBase-root-156 MuiIconButton-root-150"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex="0"
+                type="button"
+              >
+                <span
+                  className="MuiIconButton-label-155"
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-159"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"
+                    />
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                  </svg>
+                </span>
+                <span
+                  className="MuiTouchRipple-root-172"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+`;
+
+exports[`AppBarComponent - src/navigation/main-header/appBar Snapshot should match snapshot with subHeader and Publisere selection active 1`] = `
+<div
+  className="AppBarComponent-root-1"
+>
+  <header
+    className="MuiPaper-root-20 MuiPaper-elevation0-22 MuiAppBar-root-11 MuiAppBar-positionStatic-15 MuiAppBar-colorPrimary-18 AppBarComponent-appBar-2"
+    style={
+      Object {
+        "backgroundColor": "#EFEFEF",
+      }
+    }
+  >
+    <div
+      className="MuiToolbar-root-47 MuiToolbar-regular-49 MuiToolbar-gutters-48"
+    >
+      <div
+        className="MuiGrid-container-51 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-space-between-70"
+      >
+        <div
+          className="MuiGrid-container-51 MuiGrid-item-52 MuiGrid-grid-xs-true-79"
+        >
+          <div
+            className="MuiGrid-item-52"
+          >
+            <a
+              className="AppBarComponent-aImgStyling-10"
+              href="http://localhost"
+            >
+              <img
+                src="/designer/img/altinn_logo_header.png"
+              />
+            </a>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-item-52 MuiGrid-grid-xs-true-79 AppBarComponent-paper-5"
+        >
+          other-service
+        </div>
+        <div
+          className="MuiGrid-container-51 MuiGrid-item-52 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-flex-end-69 MuiGrid-grid-xs-true-79"
+        >
+          <div
+            className="MuiGrid-item-52"
+          >
+            other-org
+          </div>
+          <div
+            className="MuiGrid-item-52"
+          >
+            <div>
+              <button
+                aria-haspopup="true"
+                className="MuiButtonBase-root-156 MuiIconButton-root-150"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex="0"
+                type="button"
+              >
+                <span
+                  className="MuiIconButton-label-155"
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-159"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"
+                    />
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                  </svg>
+                </span>
+                <span
+                  className="MuiTouchRipple-root-172"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="MuiToolbar-root-47 MuiToolbar-regular-49 MuiToolbar-gutters-48"
+    >
+      <div
+        className="MuiGrid-container-51 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-center-68"
+      >
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7"
+            href="/aboutservice"
+            onClick={[Function]}
+          >
+            Om
+          </a>
+        </div>
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7"
+            href="/create"
+            onClick={[Function]}
+          >
+            Lage
+          </a>
+        </div>
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7"
+            href="/text"
+            onClick={[Function]}
+          >
+            Språk
+          </a>
+        </div>
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7"
+            href="/testingintestenvironment"
+            onClick={[Function]}
+          >
+            Teste
+          </a>
+        </div>
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7 AppBarComponent-subHeaderLinkActive-8"
+            href="/publish"
+            onClick={[Function]}
+          >
+            Publisere
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+`;
+
+exports[`AppBarComponent - src/navigation/main-header/appBar Snapshot should match snapshot with subHeader and Publisere selection active 2`] = `
+<div
+  className="AppBarComponent-root-1"
+>
+  <header
+    className="MuiPaper-root-20 MuiPaper-elevation0-22 MuiAppBar-root-11 MuiAppBar-positionStatic-15 MuiAppBar-colorPrimary-18 AppBarComponent-appBar-2"
+    style={
+      Object {
+        "backgroundColor": "#EFEFEF",
+      }
+    }
+  >
+    <div
+      className="MuiToolbar-root-47 MuiToolbar-regular-49 MuiToolbar-gutters-48"
+    >
+      <div
+        className="MuiGrid-container-51 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-space-between-70"
+      >
+        <div
+          className="MuiGrid-container-51 MuiGrid-item-52 MuiGrid-grid-xs-true-79"
+        >
+          <div
+            className="MuiGrid-item-52"
+          >
+            <a
+              className="AppBarComponent-aImgStyling-10"
+              href="http://localhost"
+            >
+              <img
+                src="/designer/img/altinn_logo_header.png"
+              />
+            </a>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-item-52 MuiGrid-grid-xs-true-79 AppBarComponent-paper-5"
+        >
+          other-service
+        </div>
+        <div
+          className="MuiGrid-container-51 MuiGrid-item-52 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-flex-end-69 MuiGrid-grid-xs-true-79"
+        >
+          <div
+            className="MuiGrid-item-52"
+          >
+            other-org
+          </div>
+          <div
+            className="MuiGrid-item-52"
+          >
+            <div>
+              <button
+                aria-haspopup="true"
+                className="MuiButtonBase-root-156 MuiIconButton-root-150"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex="0"
+                type="button"
+              >
+                <span
+                  className="MuiIconButton-label-155"
+                >
+                  <svg
+                    aria-hidden="true"
+                    className="MuiSvgIcon-root-159"
+                    focusable="false"
+                    role="presentation"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"
+                    />
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                  </svg>
+                </span>
+                <span
+                  className="MuiTouchRipple-root-172"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="MuiToolbar-root-47 MuiToolbar-regular-49 MuiToolbar-gutters-48"
+    >
+      <div
+        className="MuiGrid-container-51 MuiGrid-align-items-xs-center-59 MuiGrid-justify-xs-center-68"
+      >
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7"
+            href="/aboutservice"
+            onClick={[Function]}
+          >
+            Om
+          </a>
+        </div>
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7"
+            href="/create"
+            onClick={[Function]}
+          >
+            Lage
+          </a>
+        </div>
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7"
+            href="/text"
+            onClick={[Function]}
+          >
+            Språk
+          </a>
+        </div>
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7"
+            href="/testingintestenvironment"
+            onClick={[Function]}
+          >
+            Teste
+          </a>
+        </div>
+        <div
+          className="MuiGrid-item-52 AppBarComponent-subHeader-6"
+        >
+          <a
+            className="AppBarComponent-subHeaderLink-7 AppBarComponent-subHeaderLinkActive-8"
+            href="/publish"
+            onClick={[Function]}
+          >
+            Publisere
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+`;

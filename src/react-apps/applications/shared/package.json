@@ -4,36 +4,57 @@
   "private": true,
   "author": "Altinn",
   "license": "3-Clause BSD",
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
-    "@material-ui/core": "3.6.0",
+    "@material-ui/core": "3.6.1",
     "@material-ui/icons": "3.0.1",
-    "classnames": "^2.2.6",
-    "react": "16.6.1",
-    "typeface-roboto": "0.0.54"
+    "axios": "0.18.0",
+    "classnames": "2.2.6",
+    "diff": "4.0.1",
+    "moment": "2.24.0",
+    "react-monaco-editor": "0.22.0",
+    "react-router-dom": "4.3.1",
+    "react-truncate-markup": "2.0.1"
   },
   "devDependencies": {
-    "@types/classnames": "^2.2.6",
-    "@types/react": "16.4.14",
+    "@types/classnames": "2.2.6",
+    "@types/diff": "3.5.2",
+    "@types/enzyme": "3.1.15",
+    "@types/jest": "23.3.13",
+    "@types/jsdom": "12.2.1",
+    "@types/react": "16.8.3",
+    "@types/react-router-dom": "4.3.1",
+    "@types/react-test-renderer": "16.8.1",
     "altinn-designsystem": "2.0.19",
-    "babel-jest": "^23.6.0",
-    "enzyme": "^3.7.0",
-    "enzyme-adapter-react-16": "^1.6.0",
+    "babel-jest": "23.6.0",
+    "enzyme": "3.8.0",
+    "enzyme-adapter-react-16": "1.8.0",
     "jest": "23.1.0",
-    "jest-environment-enzyme": "^7.0.0",
-    "jest-enzyme": "^7.0.0",
-    "react-test-renderer": "^16.4.0",
-    "ts-jest": "^23.10.4",
-    "typescript": "^3.1.4"
+    "jest-environment-enzyme": "7.0.1",
+    "jest-enzyme": "7.0.1",
+    "jest-junit": "6.1.0",
+    "jsdom": "13.2.0",
+    "react": "16.8.3",
+    "react-dom": "16.8.3",
+    "react-test-renderer": "16.8.3",
+    "ts-jest": "23.10.5",
+    "typescript": "3.1.6"
   },
   "jest": {
     "transform": {
       ".(ts|tsx)": "ts-jest"
     },
+    "reporters": [
+      "default",
+      "jest-junit"
+    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
       "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
     },
-    "testRegex": ".*.(__tests__).*.(.spec|test.).(ts|tsx|js)$",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
       "ts",
       "tsx",

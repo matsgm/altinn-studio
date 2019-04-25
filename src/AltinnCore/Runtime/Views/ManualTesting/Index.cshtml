@@ -1,5 +1,5 @@
-@model AltinnCore.ServiceLibrary.StartServiceModel
-@using AltinnCore.ServiceLibrary
+@model AltinnCore.ServiceLibrary.Models.StartServiceModel
+@using AltinnCore.ServiceLibrary.Models
 @using System.Globalization;
 
 @{
@@ -7,7 +7,7 @@
     string org = ViewContext.RouteData.Values["org"] as string;
     string service = ViewContext.RouteData.Values["service"] as string;
 
-    List<AltinnCore.ServiceLibrary.ServiceInstance> instanceList = ViewBag.InstanceList;
+    List<AltinnCore.ServiceLibrary.Models.ServiceInstance> instanceList = ViewBag.InstanceList;
 }
 
 @await Component.InvokeAsync("ServiceStatus", new { org, service })
@@ -87,11 +87,11 @@
                 <td>
                     @if (instance.IsArchived)
                     {
-                        <a href="/runtime/@org/@service/@instance.ServiceInstanceID/Receipt" target="_blank">@instance.ServiceInstanceID (Arkivert)</a>
+                        <a href="@Url.Action("RedirectToCorrectState", "ManualTesting", new { instanceId = instance.ServiceInstanceID })" target="_blank">@instance.ServiceInstanceID (Arkivert)</a>
                     }
                     else
                     {
-                        <a href="/runtime/@org/@service/@instance.ServiceInstanceID/#Preview" target="_blank">@instance.ServiceInstanceID</a>
+                        <a href="@Url.Action("RedirectToCorrectState", "ManualTesting", new { instanceId = instance.ServiceInstanceID })" target="_blank">@instance.ServiceInstanceID</a>
                     }
                 </td>
                 <td>
@@ -103,11 +103,11 @@
 }
 
 <div class="form-group">
-  <input class="btn btn-primary" type="button" value="Tilbake til Altinn Studio" onclick="redirectToStartPage()" />
+  <input class="btn btn-primary" type="button" value="Tilbake til Altinn Studio" onclick="redirectToServicePage()" />
 </div>
 
 <script>
-  function redirectToStartPage() {
-    window.location.replace(window.location.origin);
+  function redirectToServicePage() {
+    window.location.replace(window.location.origin + "/designer/@org/@service");
   }
 </script>

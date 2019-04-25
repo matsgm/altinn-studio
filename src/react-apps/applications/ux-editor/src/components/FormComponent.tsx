@@ -1,7 +1,15 @@
+import {
+  createStyles, withStyles,
+} from '@material-ui/core';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import FormDesignerActionDispatchers from '../actions/formDesignerActions/formDesignerActionDispatcher';
 import { EditContainer } from '../containers/EditContainer';
-import GenericComponent from './GenericComponent';
+import { makeGetLayoutOrderSelector } from '../selectors/getLayoutData';
+
+const styles = createStyles({
+
+});
 
 /**
  * Properties defined for input for wrapper
@@ -9,7 +17,13 @@ import GenericComponent from './GenericComponent';
 export interface IProvidedProps {
   id: string;
   formData: any;
+  activeList: any[];
   handleDataUpdate: (id: string, dataModelElement: any, value: any) => void;
+  classes: any;
+  firstInActiveList: boolean;
+  lastInActiveList: boolean;
+  sendListToParent: any;
+  singleSelected: boolean;
 }
 
 /**
@@ -21,9 +35,11 @@ export interface IFormElementProps extends IProvidedProps {
   connections: any;
   externalApi: any;
   dataModelElement: IDataModelFieldElement;
+  dataModel: IDataModelFieldElement[];
   validationErrors: any[];
   textResources: any[];
   thirdPartyComponents: any;
+  order: any[];
 }
 
 /**
@@ -31,162 +47,129 @@ export interface IFormElementProps extends IProvidedProps {
  */
 export interface IFormElementState {
   component: FormComponentType;
+  activeList: any[];
+  wrapperRef: any;
 }
 
 /**
  * The component constructur
  */
-class FormComponent extends React.Component<
-  IFormElementProps,
-  IFormElementState
-  > {
-  constructor(_props: IFormElementProps, _state: IFormElementState) {
-    super(_props, _state);
 
-    this.state = {
-      component: _props.component,
+const FormComponent = (props: IFormElementProps) => {
+  const [wrapperRef, setWrapperRef] = React.useState(null);
+
+  React.useEffect(() => {
+    window.addEventListener('mousedown', handleClick);
+
+    return () => {
+      window.removeEventListener('mousedown', handleClick);
     };
-  }
+  }, []);
 
-  /**
-   * This is the event handler that triggers the Redux Actions
-   * that is sendt to the different Action dispatcher.
-   * This event handler is used for all form components rendered from this
-   */
-  public handleComponentDataUpdate = (callbackValue: any): void => {
-    if (!this.props.component.dataModelBinding) {
-      return;
+  /*
+  * Handle all types of clicks.
+  * Tracks if the click is outside of the formComponent
+  */
+  const handleClick = (e: any) => {
+    const serviceLogicMenu = document.getElementById('serviceLogicMenu');
+    if (serviceLogicMenu) {
+      if (!serviceLogicMenu.contains(e.target)) {
+        const key: any = Object.keys(props.order)[0];
+        const order = props.order[key].indexOf(props.id);
+
+        if (wrapperRef && !wrapperRef.contains(event.target) &&
+          order === 0) {
+          handleActiveListChange({});
+        }
+      }
     }
+  };
 
-    this.props.handleDataUpdate(this.props.id, this.props.dataModelElement, callbackValue);
-  }
-
-  /**
-   * This is the method that renders the configured form components in FormLayout.json
-   */
-  public renderComponent(): JSX.Element {
-    const isValid = !this.errorMessage();
-    return (
-      <GenericComponent
-        id={this.props.id}
-        component={this.props.component}
-        isValid={isValid}
-        formData={this.props.formData}
-        handleDataChange={this.handleComponentDataUpdate}
-        getTextResource={this.getTextResource}
-        designMode={this.props.designMode}
-        thirdPartyComponents={this.props.thirdPartyComponents}
-      />
-    );
-  }
+  const getWrapperRef = (node: any) => {
+    if (node) {
+      setWrapperRef(node.parentElement.parentElement);
+    }
+  };
 
   /**
    * Return a given textresource from all textresources avaiable
    */
-  public getTextResource = (resourceKey: string): string => {
-    const textResource = this.props.textResources.find((resource) => resource.id === resourceKey);
+  const getTextResource = (resourceKey: string): string => {
+    const textResource = props.textResources.find((resource) => resource.id === resourceKey);
     return textResource ? textResource.value : resourceKey;
-  }
+  };
 
   /**
    * Render label
    */
-  public renderLabel = (): JSX.Element => {
-    if (this.props.component.component === 'Header' ||
-      this.props.component.component === 'Paragraph' ||
-      this.props.component.component === 'Checkboxes' ||
-      this.props.component.component === 'Submit' ||
-      this.props.component.component === 'ThirdParty') {
+  const renderLabel = (): JSX.Element => {
+    if (props.component.component === 'Header' ||
+      props.component.component === 'Paragraph' ||
+      props.component.component === 'Submit' ||
+      props.component.component === 'ThirdParty' ||
+      props.component.component === 'AddressComponent') {
       return null;
     }
-
-    if (this.props.component.title) {
+    if (!props.component.textResourceBindings) {
+      return null;
+    }
+    if (props.component.textResourceBindings.title) {
       const label: string =
-      this.props.designMode ? this.props.component.title : this.getTextResource(this.props.component.title);
+        props.designMode ?
+          props.component.textResourceBindings.title :
+          getTextResource(props.component.textResourceBindings.title);
       return (
-        <label className='a-form-label title-label' htmlFor={this.props.id}>
+        <label className='a-form-label title-label' htmlFor={props.id}>
           {label}
-          {this.props.component.required ? null :
+          {props.component.required ? null :
             // TODO: Get text key from common texts for all services.
-            <span className='label-optional'>{this.getTextResource('(Valgfri)')}</span>
+            <span className='label-optional'>{getTextResource('(Valgfri)')}</span>
           }
         </label>
       );
     }
 
     return null;
-  }
+  };
 
-  public renderDescription = (): JSX.Element => {
-    if (this.props.component.description) {
-      const description: string = 
-      this.props.designMode ? this.props.component.description : this.getTextResource(this.props.component.description)
-      return (
-        <span className='a-form-label description-label'>{description}</span>
-      );
+  const handleActiveListChange = (obj: any) => {
+    if (Object.keys(obj).length === 0 && obj.constructor === Object) {
+      FormDesignerActionDispatchers.deleteActiveListAction();
+    } else {
+      FormDesignerActionDispatchers.updateActiveList(obj, props.activeList);
     }
-
-    return null;
-  }
+    props.sendListToParent(props.activeList);
+  };
 
   /**
    * Method that allows user to set focus to elements in the compoenent
    * instead of opening the edit modal on click.
    */
-  public disableEditOnClickForAddedComponent = (e: any) => {
+  const disableEditOnClickForAddedComponent = (e: any) => {
     e.stopPropagation();
-  }
+  };
 
   /**
    * The React Render method. This is run when this component is included in another component.
    * It is either called from FormFiller or FormDesigner.
    */
-  public render(): JSX.Element {
-    if (!this.props.designMode) {
-      return (
-        <div className='row mt-2'>
-          <div className='col'>
-            <div className='a-form-group'>
-              {this.renderLabel()}
-              {this.renderDescription()}
-              {this.renderComponent()}
-              {this.errorMessage()}
-            </div>
-          </div>
+  return (
+    <div ref={getWrapperRef}>
+      <EditContainer
+        component={props.component}
+        id={props.id}
+        firstInActiveList={props.firstInActiveList}
+        lastInActiveList={props.lastInActiveList}
+        sendItemToParent={handleActiveListChange}
+        singleSelected={props.singleSelected}
+      >
+        <div onClick={disableEditOnClickForAddedComponent}>
+          {renderLabel()}
         </div>
-      );
-    }
-    return (
-      <>
-        <EditContainer
-          component={this.props.component}
-          id={this.props.id}
-        >
-          <div className='a-form-group' onClick={this.disableEditOnClickForAddedComponent}>
-            {this.renderLabel()}
-            {this.renderComponent()}
-          </div>
-        </EditContainer>
-      </>
-    );
-  }
-
-  private errorMessage(): JSX.Element {
-    if (this.props.validationErrors && this.props.validationErrors.length > 0) {
-      return (
-        <span className='field-validation-error a-message a-message-error'>
-          <p>Validation fails:</p>
-          <ul>
-            {this.props.validationErrors.map((error: string, index: number) => {
-              return <li key={index}>{error}</li>;
-            })}
-          </ul>
-        </span>
-      );
-    }
-    return null;
-  }
-}
+      </EditContainer>
+    </div>
+  );
+};
 
 /**
  * Map values from Provided props and store to FormElementProps
@@ -194,14 +177,24 @@ class FormComponent extends React.Component<
  * @param props the input props give as input from formFiller component
  */
 const makeMapStateToProps = () => {
+  const GetLayoutOrderSelector = makeGetLayoutOrderSelector();
   const mapStateToProps = (state: IAppState, props: IProvidedProps): IFormElementProps => ({
+    activeList: props.activeList,
     id: props.id,
+    firstInActiveList: props.firstInActiveList,
+    lastInActiveList: props.lastInActiveList,
     formData: props.formData,
+    classes: props.classes,
     handleDataUpdate: props.handleDataUpdate,
+    sendListToParent: props.sendListToParent,
+    singleSelected: props.singleSelected,
     component: state.formDesigner.layout.components[props.id],
+    order: GetLayoutOrderSelector(state),
     designMode: state.appData.appConfig.designMode,
     dataModelElement: state.appData.dataModel.model.find(
-      (element) => element.DataBindingName === state.formDesigner.layout.components[props.id].dataModelBinding),
+      (element) =>
+        element.DataBindingName ===
+        state.formDesigner.layout.components[props.id].dataModelBindings.simpleBinding),
     connections: state.serviceConfigurations.APIs.connections,
     externalApi: state.serviceConfigurations.APIs.externalApisById,
     validationErrors:
@@ -210,11 +203,13 @@ const makeMapStateToProps = () => {
         : null,
     textResources: state.appData.textResources.resources,
     thirdPartyComponents: state.thirdPartyComponents.components,
+    dataModel: state.appData.dataModel.model,
   });
   return mapStateToProps;
 };
 
 /**
- * Wrapper made avaiable for other compoments
+ * Wrapper made available for other compoments
  */
-export const FormComponentWrapper = connect(makeMapStateToProps)(FormComponent);
+export const FormComponentWrapper =
+  withStyles(styles, { withTheme: true })(connect(makeMapStateToProps)(FormComponent));

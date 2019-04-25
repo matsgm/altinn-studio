@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: altinn-loadbalancer
+  labels:
+    run: altinn-loablanacer
+spec:
+  ports:
+  {{- range $port := .Values.service.ports }}
+    - port: {{ $port.port }}
+      targetPort: {{ $port.targetPort }}
+      protocol: {{ $port.protocol }}
+      name: {{ $port.name }}
+  {{- end }}
+  selector:
+    run: altinn-loadbalancer
+  type: {{ .Values.service.type }}
+  {{- if eq (required ".Values.environment must be set" .Values.environment) "development" }}
+  loadBalancerIP: "40.113.5.36"
+  {{- end }}
+  {{- if eq (required ".Values.environment must be set" .Values.environment) "production" }}
+  loadBalancerIP: "168.63.50.135"
+  {{- end }}

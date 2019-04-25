@@ -10,7 +10,8 @@ import FormDesigner from './containers/FormDesigner';
 import { FormFiller } from './containers/FormFiller';
 
 // tslint:disable-next-line:no-implicit-dependencies
-import { Route } from 'react-router';
+import { Route } from 'react-router-dom';
+import WorkflowActionDispatcher from './actions/workflowActions/worflowActionDispatcher';
 export interface IAppComponentProps { }
 
 export interface IAppCompoentState { }
@@ -26,6 +27,20 @@ const PREVIEW = 'preview';
 export class App extends React.Component<IAppComponentProps, IAppCompoentState>  {
 
   public componentDidMount() {
+    window.addEventListener('message', this.shouldRefetchFiles);
+    this.fetchFiles();
+  }
+  public componentWillUnmount() {
+    window.removeEventListener('message', this.shouldRefetchFiles);
+  }
+
+  public shouldRefetchFiles = (event: any) => {
+    if (event.data === 'NEWDATA') {
+      this.fetchFiles();
+    }
+  }
+
+  public fetchFiles() {
     const altinnWindow: IAltinnWindow = window as IAltinnWindow;
     const { org, service, instanceId, reportee } = altinnWindow;
     const servicePath = `${org}/${service}`;
@@ -58,6 +73,14 @@ export class App extends React.Component<IAppComponentProps, IAppCompoentState> 
       // Fetch service configuration
       manageServiceConfigurationActionDispatcher.fetchJsonFile(
         `${altinnWindow.location.origin}/runtime/api/resource/${servicePath}/ServiceConfigurations.json`);
+
+      // Fetch current workflow state
+      WorkflowActionDispatcher.getCurrentState(
+        `${altinnWindow.location.origin}/runtime/${servicePath}/${instanceId}/GetCurrentState?reporteeId=${reportee}`);
+
+      // Fetch language
+      appDataActionDispatcher.fetchLanguage(
+        `${altinnWindow.location.origin}/runtime/api/Language/GetLanguageAsJSON`, 'nb');
 
     } else {
       // ALTINN STUDIO
@@ -120,11 +143,6 @@ export class App extends React.Component<IAppComponentProps, IAppCompoentState> 
           exact={true}
           path='/uieditor'
           render={this.resetFormData}
-        />
-        <Route
-          exact={true}
-          path='/preview'
-          render={this.renderFormFiller}
         />
       </div>
     );

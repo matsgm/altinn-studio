@@ -26,6 +26,16 @@ namespace AltinnCore.Common.Configuration
         public string RuntimeMode { get; set; }
 
         /// <summary>
+        /// Gets or sets the soft validation prefix
+        /// </summary>
+        public string SoftValidationPrefix { get; set; }
+
+        /// <summary>
+        /// Gets or sets the altinn studio endpoint
+        /// </summary>
+        public string AltinnStudioEndpoint { get; set; }
+
+        /// <summary>
         /// Gets the path to the service implementation template
         /// </summary>
         public string ServiceImplementationTemplate
@@ -33,6 +43,17 @@ namespace AltinnCore.Common.Configuration
             get
             {
                 return TemplateLocation + "/ServiceImplementation.cs";
+            }
+        }
+
+        /// <summary>
+        /// Gets the path to the workflow template
+        /// </summary>
+        public string WorkflowTemplate
+        {
+            get
+            {
+                return TemplateLocation + "/workflow.bpmn";
             }
         }
 
@@ -99,6 +120,17 @@ namespace AltinnCore.Common.Configuration
             get
             {
                 return TemplateLocation + "/Dockerfile";
+            }
+        }
+
+        /// <summary>
+        /// Gets the path to the default project file
+        /// </summary>
+        public string DefaultProjectFile
+        {
+            get
+            {
+                return TemplateLocation + "/AltinnService/AltinnService.csproj";
             }
         }
     }

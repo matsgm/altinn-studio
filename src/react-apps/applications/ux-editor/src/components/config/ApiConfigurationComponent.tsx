@@ -173,7 +173,12 @@ class ApiConfiguration extends React.Component<IApiConfigurationProps, IApiConfi
   }
 
   public handleMappingChange = (id: any, name: string, e: any) => {
-    const value = e.target.value;
+    let value: string;
+    if (!e.target) {
+      value = e;
+    } else {
+      value = e.target.value;
+    }
     this.setState((prevState, props) => {
       return {
         ...prevState,
@@ -215,8 +220,7 @@ class ApiConfiguration extends React.Component<IApiConfigurationProps, IApiConfi
     });
   }
 
-  public handleClientParamsChange = (name: any, e: any): void => {
-    const value = e.target.value;
+  public handleClientParamsChange = (name: any, value: any): void => {
     this.setState({
       connection: {
         ...this.state.connection,
@@ -354,7 +358,7 @@ class ApiConfiguration extends React.Component<IApiConfigurationProps, IApiConfi
         <div className='modal-header a-modal-header'>
           <div className='a-iconText a-iconText-background a-iconText-large'>
             <div className='a-iconText-icon'>
-              <i className='ai ai-corp a-icon' />
+              <i className='fa fa-corp a-icon' />
             </div>
             <h1 className='a-iconText-text mb-0'>
               <span className='a-iconText-text-large'>

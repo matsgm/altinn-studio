@@ -18,8 +18,8 @@ export interface IFormFillerActionDispatchers extends ActionCreatorsMapObject {
   updateFormDataRejected: (
     error: Error,
   ) => formFillerActions.IUpdateFormDataActionRejected;
-  submitFormData: (url: string) => formFillerActions.ISubmitFormDataAction;
-  submitFormDataFulfilled: () => Action;
+  submitFormData: (url: string, apiMode?: string) => formFillerActions.ISubmitFormDataAction;
+  submitFormDataFulfilled: (apiResult: any) => formFillerActions.ISubmitFormDataActionFulfilled;
   submitFormDataRejected: (error: Error) => formFillerActions.ISubmitFormDataActionRejected;
   fetchFormData: (url: string) => formFillerActions.IFetchFormDataAction;
   fetchFormDataFulfilled: (formData: any) => formFillerActions.IFetchFormDataActionFulfilled;
@@ -27,6 +27,14 @@ export interface IFormFillerActionDispatchers extends ActionCreatorsMapObject {
   updateValidationErrors: (validationErrors: {}) => formFillerActions.IUpdateValidationErrors;
   resetFormData: (url: string) => formFillerActions.IResetFormDataAction;
   resetFormDataFulfilled: (formData: any) => formFillerActions.IResetFormDataActionFulfilled;
+  runSingleFieldValidation: (url: string, componentId: any) => formFillerActions.IRunSingleFieldValidationAction;
+  runSingleFieldValidationFulfilled: (
+    validationErrors: any,
+    ) => formFillerActions.IRunSingleFieldValidationActionFulfilled;
+  runSingleFieldValidationRejected: (error: Error) => formFillerActions.IRunSingleFieldValidationActionRejected;
+  completeAndSendInForm: (url: any) => formFillerActions.ICompleteAndSendInForm;
+  completeAndSendInFormFulfilled: () => Action;
+  completeAndSendInFormRejected: () => Action;
 }
 
 const actions: IFormFillerActionDispatchers = {
@@ -42,10 +50,16 @@ const actions: IFormFillerActionDispatchers = {
   updateValidationErrors: formFillerActions.updateValidationErrors,
   resetFormData: formFillerActions.resetFormDataAction,
   resetFormDataFulfilled: formFillerActions.resetFormDataFulfilled,
+  runSingleFieldValidation: formFillerActions.runSingleFieldValidationAction,
+  runSingleFieldValidationFulfilled: formFillerActions.runSingleFieldValidationActionFulfilled,
+  runSingleFieldValidationRejected: formFillerActions.runSingleFieldValidationActionRejected,
+  completeAndSendInForm: formFillerActions.completeAndSendInForm,
+  completeAndSendInFormFulfilled: formFillerActions.completeAndSendInFormFulfilled,
+  completeAndSendInFormRejected: formFillerActions.completeAndSendInFormRejected,
 };
 
 const FormFillerActionDispatchers: IFormFillerActionDispatchers = bindActionCreators<
   any,
   IFormFillerActionDispatchers
-  >(actions, store.dispatch);
+>(actions, store.dispatch);
 export default FormFillerActionDispatchers;

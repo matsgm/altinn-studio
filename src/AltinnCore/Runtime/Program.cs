@@ -7,12 +7,13 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Extensions.Logging;
 
 namespace AltinnCore.Runtime
 {
     /// <summary>
     /// This is the main method for running this asp.net core application without IIS
-    /// <see href="https://docs.microsoft.com/en-us/aspnet/core/fundamentals/servers/?highlight=kestrel&tabs=aspnetcore2x#kestrel"/>
     /// </summary>
     public class Program
     {
@@ -32,6 +33,15 @@ namespace AltinnCore.Runtime
         /// <returns>The web host builder</returns>
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+            .ConfigureLogging((hostingContext, logging) =>
+            {
+                logging.ClearProviders();
+                Serilog.ILogger logger = new LoggerConfiguration()
+                                .WriteTo.Console()
+                                .CreateLogger();
+
+                logging.AddProvider(new SerilogLoggerProvider(logger));
+            })
                 .UseStartup<Startup>();
     }
 }

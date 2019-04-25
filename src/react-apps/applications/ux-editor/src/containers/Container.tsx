@@ -9,14 +9,25 @@ import { FormComponentWrapper } from '../components/FormComponent';
 import { SwitchComponent } from '../components/widget/SwitchComponent';
 import { makeGetDesignModeSelector } from '../selectors/getAppData';
 import { makeGetFormDataSelector } from '../selectors/getFormData';
-import { makeGetActiveFormContainer, makeGetLayoutComponentsSelector, makeGetLayoutContainerOrder, makeGetLayoutContainersSelector } from '../selectors/getLayoutData';
+import {
+  makeGetActiveFormContainer,
+  makeGetLayoutComponentsSelector,
+  makeGetLayoutContainerOrder,
+  makeGetLayoutContainersSelector,
+} from '../selectors/getLayoutData';
 import '../styles/index.css';
-
-import { Draggable, Droppable } from 'react-beautiful-dnd';
+// import DroppableDraggableComponent from './DroppableDraggableComponent';
+// import DroppableDraggableContainer from './DroppableDraggableContainer';
 
 export interface IProvidedContainerProps {
   id: string;
+  index?: number;
   baseContainer?: boolean;
+  items?: string[];
+  onMoveComponent?: (...args: any) => void;
+  onDropComponent?: (...args: any) => void;
+  onMoveContainer?: (...args: any) => void;
+  onDropContainer?: (...args: any) => void;
 }
 
 export interface IContainerProps extends IProvidedContainerProps {
@@ -29,10 +40,37 @@ export interface IContainerProps extends IProvidedContainerProps {
   formData: any;
   index?: number;
   formContainerActive?: boolean;
+  activeList: any[];
   language: any;
 }
 
-export class ContainerComponent extends React.Component<IContainerProps> {
+export interface IContainerState {
+  itemOrder: any;
+  currentlyDragging: boolean;
+  activeList: any[];
+}
+
+export class ContainerComponent extends React.Component<IContainerProps, IContainerState> {
+  public static getDerivedStateFromProps(nextProps: IContainerProps, prevState: IContainerState) {
+    if (prevState.currentlyDragging) {
+      return {
+        ...prevState,
+      };
+    }
+    return {
+      ...nextProps,
+    };
+  }
+
+  constructor(_props: IContainerProps) {
+    super(_props);
+
+    this.state = {
+      itemOrder: _props.itemOrder,
+      currentlyDragging: false,
+      activeList: [],
+    };
+  }
 
   public handleContainerDelete = (e: any) => {
     FormDesignerActionDispatchers.deleteFormContainer(this.props.id, this.props.index);
@@ -52,8 +90,16 @@ export class ContainerComponent extends React.Component<IContainerProps> {
       dataModelElement,
       dataBindingName,
     );
+    const component = this.props.components[id];
+    if (component && component.triggerValidation) {
+      const altinnWindow: IAltinnWindow = window as IAltinnWindow;
+      const { org, service, instanceId, reportee } = altinnWindow;
+      FormFillerActionDispatchers.runSingleFieldValidation(
+        `${window.location.origin}/runtime/api/${reportee}/${org}/${service}/${instanceId}`,
+        dataBindingName,
+      );
+    }
     const repeatingContainerId = this.isRepeating() ? this.props.id : null;
-
     ConditionalRenderingActionDispatcher.checkIfConditionalRulesShouldRun(repeatingContainerId);
     RuleConnectionActionDispatchers.checkIfRuleShouldRun(id, dataModelElement, callbackValue, repeatingContainerId);
     ApiActionDispatchers.checkIfApiShouldFetch(id, dataModelElement, callbackValue, this.props.repeating,
@@ -89,13 +135,15 @@ export class ContainerComponent extends React.Component<IContainerProps> {
           </div>
         }
 
-        {this.props.itemOrder.map((id: string, index: number) => (
-          this.props.components[id] ?
-            this.renderFormComponent(id, index) :
-            this.props.containers[id] ?
-              this.renderContainer(id)
-              : null
-        ))
+        {!this.props.itemOrder.length ?
+          this.props.designMode ? this.renderContainerPlaceholder() : null :
+          this.props.itemOrder.map((id: string, index: number) => (
+            this.props.components[id] ?
+              this.renderFormComponent(id, index) :
+              this.props.containers[id] ?
+                this.renderContainer(id, index)
+                : null
+          ))
         }
         {
           !this.props.designMode && this.props.index !== 0 && !this.props.baseContainer &&
@@ -111,70 +159,76 @@ export class ContainerComponent extends React.Component<IContainerProps> {
   }
 
   public render() {
-    if (this.props.designMode) {
-      return (
-        <div>
-          <Droppable droppableId={this.props.id} key={this.props.id}>
-            {(provided, snapshot) => (
-              this.renderContent(provided.innerRef)
-            )}
-          </Droppable>
-        </div>
-      );
-    }
-
     return (
-      <div>
+      <div className={'col-12'}>
         {this.renderContent()}
         {this.renderNewGroupButton()}
       </div>
     );
-
   }
 
-  public renderContainer = (id: string) => {
-    if (this.props.containers[id].hidden && !this.props.designMode) {
+  public renderContainerPlaceholder = () => {
+    const DroppableDraggableComponent = require('./DroppableDraggableComponent').default;
+    return (
+      <DroppableDraggableComponent
+        onDropComponent={this.props.onDropComponent}
+        onMoveComponent={this.props.onMoveComponent}
+        onDropContainer={this.props.onDropContainer}
+        onMoveContainer={this.props.onMoveContainer}
+        canDrag={false}
+        id={'placeholder'}
+        index={0}
+        containerId={this.props.id}
+      >
+        {this.props.language.ux_editor.container_empty}
+      </DroppableDraggableComponent>
+    );
+  }
+
+  public renderContainer = (id: string, index: number): JSX.Element => {
+    return null;
+    /*
+      Commented out since we're disabling containers until design is done.
+      https://github.com/Altinn/altinn-studio/issues/451
+
+      if (this.props.containers[id].hidden && !this.props.designMode) {
       return null;
     }
     if (this.props.designMode) {
+      const DroppableDraggableContainer = require('./DroppableDraggableContainer').default;
       return (
-        <Draggable
-          draggableId={id}
-          index={this.props.itemOrder.indexOf(id) - 1}
-          key={id}
+        <DroppableDraggableContainer
+          id={id}
+          index={index}
+          baseContainer={false}
+          parentContainerId={this.props.id}
+          canDrag={true}
+          onDropComponent={this.props.onDropComponent}
+          onMoveComponent={this.props.onMoveComponent}
+          onDropContainer={this.props.onDropComponent}
+          onMoveContainer={this.props.onMoveContainer}
         >
-          {(provided, snapshot) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.dragHandleProps}
-            >
-              <Droppable
-                droppableId={id}
-              >
-                {(provided, snapshot) => (
-                  <div
-                    ref={provided.innerRef}
-                  >
-                    <Container
-                      id={id}
-                      key={`${id}-${provided.innerRef}`}
-                      baseContainer={false}
-                    />
-                  </div>
-                )}
-              </Droppable>
-            </div>
-          )}
-        </Draggable>
+          <Container
+            id={id}
+            index={index}
+            items={this.props.itemOrder[id]}
+            baseContainer={false}
+            onDropComponent={this.props.onDropContainer}
+            onMoveComponent={this.props.onMoveComponent}
+            onDropContainer={this.props.onDropContainer}
+            onMoveContainer={this.props.onMoveContainer}
+          />
+        </DroppableDraggableContainer>
       );
     }
     return (
-            <Container
-              id={id}
-              key={`${id}`}
-              baseContainer={false}
-            />
+      <Container
+        id={id}
+        key={`${id}`}
+        baseContainer={false}
+      />
     );
+    */
   }
 
   public renderDeleteGroupButton = (): JSX.Element => {
@@ -187,7 +241,7 @@ export class ContainerComponent extends React.Component<IContainerProps> {
         className='a-btn a-btn-icon p-0'
         onClick={this.handleContainerDelete}
       >
-        <i className='ai ai-circle-exit a-danger ai-left' />
+        <i className='fa fa-circle-exit a-danger ai-left' />
       </button>
     );
   }
@@ -209,7 +263,7 @@ export class ContainerComponent extends React.Component<IContainerProps> {
         className={'a-btn a-btn-action'}
         onClick={this.handleAddNewGroup}
       >
-        <i className={'ai ai-plus'} />
+        <i className={'fa fa-plus'} />
         <span>
           {this.props.language.ux_editor.repeating_group_add}
         </span>
@@ -217,49 +271,85 @@ export class ContainerComponent extends React.Component<IContainerProps> {
     );
   }
 
-  public renderFormComponent = (id: string, key: any): JSX.Element => {
+  public handleActiveListChange = (list: any[]) => {
+    this.setState({
+      activeList: list,
+    });
+  }
+
+  public renderFormComponent = (id: string, index: number): JSX.Element => {
     if (this.props.components[id].hidden && !this.props.designMode) {
       return null;
     }
-
+    const activeListIndex = this.props.activeList.findIndex((listItem: any) => listItem.id === id);
     if (this.props.designMode) {
+      const DroppableDraggableComponent = require('./DroppableDraggableComponent').default;
+      let canDrag: boolean = true;
+      for (const activeItem of this.state.activeList) {
+        if (activeItem.id === id) {
+          canDrag = false;
+        }
+      }
       return (
-        <Draggable
-          key={key}
-          draggableId={id}
-          index={key}
+        <DroppableDraggableComponent
+          canDrag={canDrag}
+          id={id}
+          index={index}
+          key={index}
+          containerId={this.props.id}
+          onDropComponent={this.props.onDropContainer}
+          onMoveComponent={this.props.onMoveComponent}
+          onDropContainer={this.props.onDropContainer}
+          onMoveContainer={this.props.onMoveContainer}
         >
-          {(provided, snapshot) => (
-            <div
-              ref={
-                provided.innerRef
-              }
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-            >
-
-              <FormComponentWrapper
-                key={key}
-                id={id}
-                handleDataUpdate={this.handleComponentDataUpdate}
-                formData={this.props.formData[this.props.components[id].dataModelBinding] ?
-                  this.props.formData[this.props.components[id].dataModelBinding] : ''}
-              />
-
-            </div>
-          )}
-        </Draggable>
+          <FormComponentWrapper
+            key={index}
+            id={id}
+            activeList={this.props.activeList}
+            firstInActiveList={activeListIndex >= 0 ? this.props.activeList[activeListIndex].firstInActiveList : true}
+            lastInActiveList={activeListIndex >= 0 ? this.props.activeList[activeListIndex].lastInActiveList : true}
+            handleDataUpdate={this.handleComponentDataUpdate}
+            formData={this.getFormData(id)}
+            sendListToParent={this.handleActiveListChange}
+            singleSelected={this.props.activeList.length === 1}
+          />
+        </DroppableDraggableComponent>
       );
     }
     return (
       <FormComponentWrapper
-        key={key}
+        key={index}
         id={id}
+        activeList={this.props.activeList}
+        firstInActiveList={activeListIndex >= 0 ? this.props.activeList[activeListIndex].firstInActiveList : true}
+        lastInActiveList={activeListIndex >= 0 ? this.props.activeList[activeListIndex].lastInActiveList : true}
         handleDataUpdate={this.handleComponentDataUpdate}
-        formData={this.props.formData[this.props.components[id].dataModelBinding] ?
-          this.props.formData[this.props.components[id].dataModelBinding] : ''}
+        formData={this.getFormData(id)}
+        sendListToParent={this.handleActiveListChange}
+        singleSelected={this.props.activeList.length === 1}
       />
     );
+  }
+
+  public getFormData = (id: string): string | {} => {
+    if (!this.props.components[id].dataModelBindings ||
+      Object.keys(this.props.components[id].dataModelBindings).length === 0) {
+      return '';
+    }
+    const valueArr: { [id: string]: string } = {};
+    for (const dataBindingKey in this.props.components[id].dataModelBindings) {
+      if (!dataBindingKey) {
+        continue;
+      }
+      valueArr[dataBindingKey] = this.props.formData[this.props.components[id].dataModelBindings[dataBindingKey]];
+    }
+    if (Object.keys(valueArr).indexOf('simpleBinding') >= 0) {
+      // Simple component
+      return valueArr.simpleBinding;
+    } else {
+      // Advanced component
+      return valueArr;
+    }
   }
 
   public handleAddNewGroup = () => {
@@ -280,22 +370,30 @@ const makeMapStateToProps = () => {
   const GetLayoutComponentsSelector = makeGetLayoutComponentsSelector();
   const GetDesignModeSelector = makeGetDesignModeSelector();
   const GetActiveFormContainer = makeGetActiveFormContainer();
+  const GetContainersSelector = makeGetLayoutContainersSelector();
   const GetLayoutContainerOrder = makeGetLayoutContainerOrder();
   const mapStateToProps = (state: IAppState, props: IProvidedContainerProps): IContainerProps => {
-    const containers = GetLayoutContainersSelector(state);
+    const containers = GetContainersSelector(state);
     const container = containers[props.id];
+    const itemOrder = GetLayoutContainerOrder(state, props.id);
     return {
-      id: props.id,
-      index: container.index,
-      itemOrder: GetLayoutContainerOrder(state, props.id),
-      components: GetLayoutComponentsSelector(state),
-      containers,
-      designMode: GetDesignModeSelector(state),
-      repeating: container.repeating,
-      formData: GetFormDataSelector(state, props, container.index),
+      activeList: state.formDesigner.layout.activeList,
       dataModelGroup: container.dataModelGroup,
+      repeating: container.repeating,
       formContainerActive: GetActiveFormContainer(state, props),
+      designMode: GetDesignModeSelector(state),
+      components: GetLayoutComponentsSelector(state),
+      containers: GetLayoutContainersSelector(state),
       language: state.appData.language.language,
+      formData: GetFormDataSelector(state, props, container.index),
+      itemOrder: !props.items ? itemOrder : props.items,
+      id: props.id,
+      index: props.index,
+      baseContainer: props.baseContainer,
+      onMoveComponent: props.onMoveComponent,
+      onDropComponent: props.onDropComponent,
+      onMoveContainer: props.onMoveContainer,
+      onDropContainer: props.onDropContainer,
     };
   };
   return mapStateToProps;

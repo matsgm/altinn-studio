@@ -28,6 +28,7 @@ const fallbackLanguage = {
     conditional_rendering_connection_header: 'Conditional Rendering Connections',
     form_designer: 'Form designer',
     formfiller_placeholder_user: 'OLA PRIVATPERSON',
+    modal_configure_address_component_simplified: 'Simplified',
     modal_configure_api_code_list: 'Code list',
     modal_configure_api_extermnal_api: 'External API',
     modal_configure_api_header: 'Configure API connection',
@@ -60,7 +61,8 @@ const fallbackLanguage = {
     modal_properties_description_helper: 'Write or search for description',
     modal_properties_header_helper: 'Write a title or search',
     modal_properties_label_helper: 'Write or search for label',
-    modal_properties_paragraph_helper: 'Write or search for paragraph',
+    modal_properties_paragraph_helper: 'Search for paragraph text',
+    modal_properties_paragraph_edit_helper: 'Or write paragraph text',
     modal_properties_header: 'Edit properties',
     modal_restrictions: 'Restrictions from data model',
     modal_restrictions_empty: 'No restrictions to show',
@@ -76,6 +78,9 @@ const fallbackLanguage = {
     toolbar_header: 'Header',
     toolbar_file_upload: 'File Upload',
   },
+  form_filler: {
+    error_report_header: 'Det er et problem',
+  }
 };
 
 export default fallbackLanguage;

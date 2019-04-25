@@ -1,14 +1,20 @@
 import { combineReducers, Reducer, ReducersMapObject } from 'redux';
-import serviceDevelopmentReducer, {IServiceDevelopmentState} from '../reducers/serviceDevelopmentReducer';
+import handleServiceInformationReducer, { IHandleServiceInformationState } from '../features/administration/handleServiceInformationReducer';
+import handleMergeConflictReducer, { IHandleMergeConflictState } from '../features/handleMergeConflict/handleMergeConflictReducer';
+import languageReducer, { IFetchedLanguageState } from '../utils/fetchLanguage/languageReducer';
 
 export interface IServiceDevelopmentReducers
   extends IServiceDevelopmentNameSpace<
-  Reducer<IServiceDevelopmentState>
+  Reducer<IFetchedLanguageState>,
+  Reducer<IHandleMergeConflictState>,
+  Reducer<IHandleServiceInformationState>
   >,
   ReducersMapObject { }
 
 const reducers: IServiceDevelopmentReducers = {
-  serviceDevelopment: serviceDevelopmentReducer,
+  language: languageReducer,
+  handleMergeConflict: handleMergeConflictReducer,
+  serviceInformation: handleServiceInformationReducer,
 };
 
 export default combineReducers(reducers);
